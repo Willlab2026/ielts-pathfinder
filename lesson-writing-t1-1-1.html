@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.1 What is Task 1 like? - PathFinder</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* ===== 课时页专属样式 ===== */
+
+        .lesson-hero {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1a252f 100%);
+            color: white;
+            padding: var(--space-xl) 0;
+        }
+
+        .lesson-hero-inner {
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+        }
+
+        .lesson-badge {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-red);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .lesson-hero-info h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            margin-bottom: var(--space-xs);
+        }
+
+        .lesson-hero-info p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* ===== 图片展示区域 ===== */
+        .image-showcase {
+            background: var(--bg-white);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            margin-bottom: var(--space-xl);
+        }
+
+        .image-showcase-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--primary-dark);
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-md);
+            border-bottom: 1px solid var(--border-soft);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .image-showcase-title .num {
+            width: 28px;
+            height: 28px;
+            background: var(--primary-red);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .sample-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-xl);
+        }
+
+        .sample-image-item {
+            text-align: center;
+        }
+
+        .sample-image-item img {
+            width: 100%;
+            max-width: 100%;
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .sample-image-label {
+            margin-top: var(--space-md);
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            font-weight: 500;
+        }
+
+        /* ===== 练习区域 ===== */
+        .exercise-area {
+            background: var(--bg-white);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            margin-bottom: var(--space-xl);
+        }
+
+        .exercise-area-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--primary-dark);
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-md);
+            border-bottom: 1px solid var(--border-soft);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .exercise-area-title .num {
+            width: 28px;
+            height: 28px;
+            background: var(--primary-red);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .exercise-intro {
+            background: var(--bg-cream);
+            border-left: 3px solid var(--primary-red);
+            padding: var(--space-lg);
+            margin-bottom: var(--space-xl);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+        }
+
+        /* ===== 填空题样式 ===== */
+        .fill-blank-question {
+            margin-bottom: var(--space-xl);
+            padding-bottom: var(--space-xl);
+            border-bottom: 1px dashed var(--border-soft);
+        }
+
+        .fill-blank-question:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .question-number {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            background: var(--primary-dark);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-right: var(--space-sm);
+            flex-shrink: 0;
+        }
+
+        .question-text {
+            font-size: 1rem;
+            line-height: 2;
+            color: var(--text-dark);
+        }
+
+        .blank-input {
+            display: inline-block;
+            width: 140px;
+            padding: 4px 10px;
+            border: 2px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem;
+            text-align: center;
+            margin: 0 4px;
+            transition: all 0.2s;
+            background: var(--bg-white);
+        }
+
+        .blank-input:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            background: #fff;
+        }
+
+        .blank-input.correct {
+            border-color: #27ae60;
+            background: rgba(39, 174, 96, 0.1);
+            color: #27ae60;
+        }
+
+        .blank-input.incorrect {
+            border-color: #e74c3c;
+            background: rgba(231, 76, 60, 0.1);
+            color: #e74c3c;
+        }
+
+        .blank-input.unchecked {
+            border-color: var(--border-soft);
+        }
+
+        /* ===== 匹配题样式 ===== */
+        .matching-question {
+            margin-bottom: var(--space-xl);
+        }
+
+        .matching-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: var(--space-lg);
+        }
+
+        .matching-table th,
+        .matching-table td {
+            padding: var(--space-md) var(--space-lg);
+            text-align: left;
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        .matching-table th {
+            background: var(--bg-cream);
+            font-weight: 600;
+            color: var(--primary-dark);
+            font-size: 0.9rem;
+        }
+
+        .matching-table td {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+        }
+
+        .matching-select {
+            padding: 6px 12px;
+            border: 2px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            background: var(--bg-white);
+            cursor: pointer;
+            min-width: 200px;
+            transition: all 0.2s;
+        }
+
+        .matching-select:focus {
+            outline: none;
+            border-color: var(--primary-red);
+        }
+
+        .matching-select.correct {
+            border-color: #27ae60;
+            background: rgba(39, 174, 96, 0.1);
+            color: #27ae60;
+        }
+
+        .matching-select.incorrect {
+            border-color: #e74c3c;
+            background: rgba(231, 76, 60, 0.1);
+            color: #e74c3c;
+        }
+
+        /* ===== 核对答案按钮 ===== */
+        .check-answers-section {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-md);
+            margin-top: var(--space-xl);
+            padding-top: var(--space-xl);
+            border-top: 2px solid var(--border-soft);
+        }
+
+        .btn-check {
+            padding: var(--space-md) var(--space-2xl);
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-check-primary {
+            background: var(--primary-red);
+            color: white;
+        }
+
+        .btn-check-primary:hover {
+            background: #6b0000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 0, 0, 0.3);
+        }
+
+        .btn-check-secondary {
+            background: var(--bg-cream);
+            color: var(--text-gray);
+            border: 1px solid var(--border-soft);
+        }
+
+        .btn-check-secondary:hover {
+            background: var(--border-soft);
+        }
+
+        /* ===== 结果反馈 ===== */
+        .result-feedback {
+            margin-top: var(--space-lg);
+            padding: var(--space-lg);
+            border-radius: var(--radius-md);
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 600;
+            display: none;
+        }
+
+        .result-feedback.show {
+            display: block;
+        }
+
+        .result-feedback.success {
+            background: rgba(39, 174, 96, 0.1);
+            color: #27ae60;
+            border: 1px solid rgba(39, 174, 96, 0.3);
+        }
+
+        .result-feedback.partial {
+            background: rgba(243, 156, 18, 0.1);
+            color: #f39c12;
+            border: 1px solid rgba(243, 156, 18, 0.3);
+        }
+
+        /* ===== 导航按钮 ===== */
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: var(--space-xl);
+        }
+
+        .lesson-nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-md) var(--space-xl);
+            background: var(--bg-white);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .lesson-nav-btn:hover {
+            border-color: var(--primary-red);
+            color: var(--primary-red);
+        }
+
+        .lesson-nav-btn.primary {
+            background: var(--primary-red);
+            color: white;
+            border-color: var(--primary-red);
+        }
+
+        .lesson-nav-btn.primary:hover {
+            background: #6b0000;
+        }
+
+        /* ===== 答案解析（默认隐藏） ===== */
+        .answer-explanation {
+            margin-top: var(--space-md);
+            padding: var(--space-md) var(--space-lg);
+            background: #f8f9fa;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            display: none;
+            border-left: 3px solid var(--primary-red);
+        }
+
+        .answer-explanation.show {
+            display: block;
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 768px) {
+            .sample-images {
+                grid-template-columns: 1fr;
+            }
+
+            .blank-input {
+                width: 100px;
+            }
+
+            .matching-select {
+                min-width: 140px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部导航 -->
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">PF</div>
+                    <div class="logo-text">PathFinder<span>IELTS Learning Protocol</span></div>
+                </a>
+                <nav class="nav">
+                    <a href="index.html" class="nav-item">Modules</a>
+                    <a href="#" class="nav-item">My Progress</a>
+                    <a href="#" class="nav-item">Practice</a>
+                    <a href="#" class="nav-item">AI Assistant</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- 面包屑 -->
+    <div class="container">
+        <div class="breadcrumb" style="padding-top: var(--space-lg);">
+            <a href="index.html">Home</a>
+            <span class="breadcrumb-sep">›</span>
+            <a href="module-writing.html">Writing</a>
+            <span class="breadcrumb-sep">›</span>
+            <a href="writing-task1.html">Task 1</a>
+            <span class="breadcrumb-sep">›</span>
+            <span>1.1 What is Task 1 like?</span>
+        </div>
+    </div>
+
+    <!-- 课时标题区 -->
+    <section class="lesson-hero">
+        <div class="container">
+            <div class="lesson-hero-inner">
+                <div class="lesson-badge">1.1</div>
+                <div class="lesson-hero-info">
+                    <h1>What is Task 1 like?</h1>
+                    <p>Understanding the format, timing, and requirements of IELTS Writing Task 1</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 主内容区 -->
+    <div class="container" style="padding: var(--space-xl) 0;">
+
+        <!-- ===== 图片展示 ===== -->
+        <div class="image-showcase">
+            <div class="image-showcase-title">
+                <span class="num">1</span>
+                Sample Task 1 Questions
+            </div>
+            <p style="margin-bottom: var(--space-lg); color: var(--text-gray); font-size: 0.95rem; line-height: 1.8;">
+                Below are two authentic IELTS Writing Task 1 questions. Study them carefully — you will need to answer questions about their structure and components.
+            </p>
+            <div class="sample-images">
+                <div class="sample-image-item">
+                    <img src="images/task1-sample1.png" alt="IELTS Task 1 Sample - Table">
+                    <div class="sample-image-label">Sample 1: Table (Family poverty in Australia)</div>
+                </div>
+                <div class="sample-image-item">
+                    <img src="images/task1-sample2.png" alt="IELTS Task 1 Sample - Bar Chart">
+                    <div class="sample-image-label">Sample 2: Bar Chart (Post-school qualifications by gender)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== 练习区域 ===== -->
+        <div class="exercise-area">
+            <div class="exercise-area-title">
+                <span class="num">2</span>
+                Comprehension Check
+            </div>
+
+            <div class="exercise-intro">
+                <strong>Instructions:</strong> Read the two sample questions above carefully, then complete the following exercises. Fill in the blanks and match the items. Click <strong>"Check Answers"</strong> when you are ready to see your results.
+            </div>
+
+            <!-- 填空题 -->
+            <div class="fill-blank-question">
+                <div class="question-text">
+                    <span class="question-number">1.1</span>
+                    By comparing the two questions, we can see that every Task 1 question contains
+                    <input type="text" class="blank-input" id="q1_1" data-answer="five" placeholder="?"> parts.
+                    They are A, B, C, D and E.
+                </div>
+                <div class="answer-explanation" id="exp1_1">
+                    <strong>Answer:</strong> five — Both questions clearly show five labeled parts: A, B, C, D, and E.
+                </div>
+            </div>
+
+            <div class="fill-blank-question">
+                <div class="question-text">
+                    <span class="question-number">1.2</span>
+                    Part <input type="text" class="blank-input" id="q1_2" data-answer="A" placeholder="?">
+                    tells you how much time you should spend on this task.
+                </div>
+                <div class="answer-explanation" id="exp1_2">
+                    <strong>Answer:</strong> A — Part A states "You should spend about 20 minutes on this task."
+                </div>
+            </div>
+
+            <div class="fill-blank-question">
+                <div class="question-text">
+                    <span class="question-number">2</span>
+                    Part <input type="text" class="blank-input" id="q2" data-answer="B" placeholder="?">
+                    introduces the <input type="text" class="blank-input" id="q2_2" data-answer="topic" placeholder="?">
+                    of the visual information.
+                </div>
+                <div class="answer-explanation" id="exp2">
+                    <strong>Answer:</strong> B, topic — Part B describes what the visual shows (e.g., "The table below shows the proportion of different categories of families living in poverty in Australia in 1999").
+                </div>
+            </div>
+
+            <div class="fill-blank-question">
+                <div class="question-text">
+                    <span class="question-number">3</span>
+                    Part <input type="text" class="blank-input" id="q3" data-answer="C" placeholder="?">
+                    tells you what you should do in your writing. In other words, it gives you the
+                    <input type="text" class="blank-input" id="q3_2" data-answer="instructions" placeholder="?">.
+                </div>
+                <div class="answer-explanation" id="exp3">
+                    <strong>Answer:</strong> C, instructions — Part C says "Summarise the information by selecting and reporting the main features, and make comparisons where relevant."
+                </div>
+            </div>
+
+            <!-- 匹配题 -->
+            <div class="matching-question" style="margin-top: var(--space-xl);">
+                <div class="question-text" style="margin-bottom: var(--space-lg);">
+                    <span class="question-number">4</span>
+                    Match the following descriptions with the correct part (A, B, C, D or E).
+                </div>
+
+                <table class="matching-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 60%;">Description</th>
+                            <th>Part</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>4.1 It tells you the minimum number of words you must write.</td>
+                            <td>
+                                <select class="matching-select" id="m4_1" data-answer="D">
+                                    <option value="">-- Select --</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                    <option value="E">E</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>4.2 It is where the visual information (graph, table, chart, etc.) is presented.</td>
+                            <td>
+                                <select class="matching-select" id="m4_2" data-answer="E">
+                                    <option value="">-- Select --</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                    <option value="E">E</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>4.3 It tells you how much time you should spend on the task.</td>
+                            <td>
+                                <select class="matching-select" id="m4_3" data-answer="A">
+                                    <option value="">-- Select --</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                    <option value="E">E</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>4.4 It introduces the topic of the visual information.</td>
+                            <td>
+                                <select class="matching-select" id="m4_4" data-answer="B">
+                                    <option value="">-- Select --</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                    <option value="E">E</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>4.5 It gives you the writing instructions.</td>
+                            <td>
+                                <select class="matching-select" id="m4_5" data-answer="C">
+                                    <option value="">-- Select --</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                    <option value="E">E</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="answer-explanation" id="exp4">
+                    <strong>Answers:</strong><br>
+                    4.1 D — "Write at least 150 words."<br>
+                    4.2 E — The visual data (table, chart, graph, etc.)<br>
+                    4.3 A — "You should spend about 20 minutes on this task."<br>
+                    4.4 B — Introduces what the visual is about<br>
+                    4.5 C — "Summarise the information..."
+                </div>
+            </div>
+
+            <!-- 核对答案按钮 -->
+            <div class="check-answers-section">
+                <button class="btn-check btn-check-secondary" onclick="resetAnswers()">Reset</button>
+                <button class="btn-check btn-check-primary" onclick="checkAnswers()">Check Answers</button>
+            </div>
+
+            <!-- 结果反馈 -->
+            <div class="result-feedback" id="resultFeedback"></div>
+        </div>
+
+        <!-- 课时导航 -->
+        <div class="lesson-nav">
+            <a href="writing-task1.html?chapter=1" class="lesson-nav-btn">
+                <span>‹</span> Back to Task 1 Directory
+            </a>
+            <a href="lesson.html?module=writing-t1&id=1-2" class="lesson-nav-btn primary">
+                Next: 1.2 Requirements ›
+            </a>
+        </div>
+
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">PathFinder</div>
+            <p class="footer-text">IELTS Learning Protocol</p>
+        </div>
+    </footer>
+
+    <script>
+        // 核对答案功能
+        function checkAnswers() {
+            let correctCount = 0;
+            let totalCount = 0;
+
+            // 检查填空题
+            const blankInputs = document.querySelectorAll('.blank-input');
+            blankInputs.forEach(function(input) {
+                totalCount++;
+                const userAnswer = input.value.trim().toLowerCase();
+                const correctAnswer = input.dataset.answer.toLowerCase();
+
+                input.classList.remove('correct', 'incorrect', 'unchecked');
+
+                if (userAnswer === '') {
+                    input.classList.add('unchecked');
+                } else if (userAnswer === correctAnswer) {
+                    input.classList.add('correct');
+                    correctCount++;
+                } else {
+                    input.classList.add('incorrect');
+                }
+            });
+
+            // 检查匹配题
+            const matchingSelects = document.querySelectorAll('.matching-select');
+            matchingSelects.forEach(function(select) {
+                totalCount++;
+                const userAnswer = select.value;
+                const correctAnswer = select.dataset.answer;
+
+                select.classList.remove('correct', 'incorrect', 'unchecked');
+
+                if (userAnswer === '') {
+                    select.classList.add('unchecked');
+                } else if (userAnswer === correctAnswer) {
+                    select.classList.add('correct');
+                    correctCount++;
+                } else {
+                    select.classList.add('incorrect');
+                }
+            });
+
+            // 显示结果反馈
+            const feedback = document.getElementById('resultFeedback');
+            const percentage = Math.round((correctCount / totalCount) * 100);
+
+            if (correctCount === totalCount) {
+                feedback.className = 'result-feedback show success';
+                feedback.innerHTML = '🎉 Excellent! You got all ' + totalCount + ' questions correct!';
+            } else if (correctCount >= totalCount * 0.6) {
+                feedback.className = 'result-feedback show partial';
+                feedback.innerHTML = '👍 Good job! You got ' + correctCount + ' out of ' + totalCount + ' correct (' + percentage + '%). Review the incorrect answers below.';
+            } else {
+                feedback.className = 'result-feedback show partial';
+                feedback.innerHTML = '💪 Keep practicing! You got ' + correctCount + ' out of ' + totalCount + ' correct (' + percentage + '%). Review the answers and try again.';
+            }
+
+            // 显示答案解析
+            document.querySelectorAll('.answer-explanation').forEach(function(exp) {
+                exp.classList.add('show');
+            });
+
+            // 滚动到结果区域
+            feedback.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // 重置答案
+        function resetAnswers() {
+            // 清空填空题
+            document.querySelectorAll('.blank-input').forEach(function(input) {
+                input.value = '';
+                input.classList.remove('correct', 'incorrect');
+                input.classList.add('unchecked');
+            });
+
+            // 重置匹配题
+            document.querySelectorAll('.matching-select').forEach(function(select) {
+                select.value = '';
+                select.classList.remove('correct', 'incorrect');
+                select.classList.add('unchecked');
+            });
+
+            // 隐藏反馈
+            const feedback = document.getElementById('resultFeedback');
+            feedback.classList.remove('show');
+
+            // 隐藏答案解析
+            document.querySelectorAll('.answer-explanation').forEach(function(exp) {
+                exp.classList.remove('show');
+            });
+        }
+    </script>
+
+</body>
+</html>
