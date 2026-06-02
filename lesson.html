@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学习单元 - PathFinder</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- 顶部导航栏 -->
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">PF</div>
+                    <div class="logo-text">
+                        PathFinder
+                        <span>IELTS Learning Protocol</span>
+                    </div>
+                </a>
+                <nav class="nav">
+                    <a href="index.html" class="nav-item">学习模块</a>
+                    <a href="#" class="nav-item">我的进度</a>
+                    <a href="#" class="nav-item">练习中心</a>
+                    <a href="#" class="nav-item">AI 助手</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- 面包屑导航 -->
+    <div class="container">
+        <div class="breadcrumb" style="padding-top: var(--space-lg);">
+            <a href="index.html">首页</a>
+            <span class="breadcrumb-sep">›</span>
+            <a href="module-vocabulary.html">词汇模块</a>
+            <span class="breadcrumb-sep">›</span>
+            <span>词根前缀基础</span>
+        </div>
+    </div>
+
+    <!-- 学习内容区 -->
+    <div class="container">
+        <div class="lesson-container">
+            <!-- 主内容区 -->
+            <div class="lesson-main">
+                <div class="lesson-content">
+                    <h1 class="lesson-title">词根前缀基础 (Basic Roots) - Part 1</h1>
+
+                    <div class="lesson-text">
+                        <p>
+                            在英语中，超过 <strong>60%</strong> 的词汇来源于拉丁语或希腊语。掌握这些词根词缀，就像获得了一把解开单词密码的钥匙。今天我们先来学习最常见的 <span class="highlight">8 个基础词根</span>。
+                        </p>
+
+                        <h3 style="color: var(--primary-dark); margin: var(--space-xl) 0 var(--space-md);">一、词根 "spect" = 看 / 观察</h3>
+                        <p>
+                            <strong>spect</strong> 来自拉丁语 <em>specere</em>，意为"看"。由它构成的词汇往往与观察、观看有关。
+                        </p>
+
+                        <div style="background: var(--bg-cream); padding: var(--space-lg); border-radius: var(--radius-md); margin: var(--space-lg) 0; border-left: 3px solid var(--primary-red);">
+                            <div style="margin-bottom: var(--space-md);">
+                                <strong style="color: var(--primary-red);">inspect</strong>
+                                <span style="color: var(--text-gray);"> [in- = into] → 深入地看 → <em>v. 检查，仔细审视</em></span>
+                            </div>
+                            <div style="margin-bottom: var(--space-md);">
+                                <strong style="color: var(--primary-red);">respect</strong>
+                                <span style="color: var(--text-gray);"> [re- = back] → 回头看（在意）→ <em>v./n. 尊敬，重视</em></span>
+                            </div>
+                            <div>
+                                <strong style="color: var(--primary-red);">spectacular</strong>
+                                <span style="color: var(--text-gray);"> [spect + -acular 形容词后缀] → 值得看的 → <em>adj. 壮观的，引人注目的</em></span>
+                            </div>
+                        </div>
+
+                        <h3 style="color: var(--primary-dark); margin: var(--space-xl) 0 var(--space-md);">二、词根 "vert/vers" = 转 / 转变</h3>
+                        <p>
+                            <strong>vert</strong> 和 <strong>vers</strong> 都来自拉丁语 <em>vertere</em>，意为"转动"。这个家族的词汇非常多，在雅思阅读和写作中频繁出现。
+                        </p>
+
+                        <div style="background: var(--bg-cream); padding: var(--space-lg); border-radius: var(--radius-md); margin: var(--space-lg) 0; border-left: 3px solid var(--primary-red);">
+                            <div style="margin-bottom: var(--space-md);">
+                                <strong style="color: var(--primary-red);">convert</strong>
+                                <span style="color: var(--text-gray);"> [con- = together] → 一起转过来 → <em>v. 转换，改变（信仰/用途）</em></span>
+                            </div>
+                            <div style="margin-bottom: var(--space-md);">
+                                <strong style="color: var(--primary-red);">diverse</strong>
+                                <span style="color: var(--text-gray);"> [di- = apart] → 分开转向不同方向 → <em>adj. 多样的，不同的</em></span>
+                            </div>
+                            <div>
+                                <strong style="color: var(--primary-red);">reverse</strong>
+                                <span style="color: var(--text-gray);"> [re- = back] → 转回去 → <em>v./adj. 颠倒，反转</em></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 音频播放器 -->
+                    <div class="audio-player">
+                        <div style="font-size: 0.85rem; color: var(--text-light); margin-bottom: var(--space-md);">🎧 听外教朗读，纠正发音</div>
+                        <div class="audio-controls">
+                            <button class="play-btn" id="playBtn">▶</button>
+                            <div class="audio-info">
+                                <div class="audio-title">Lesson Audio - Basic Roots Part 1</div>
+                                <div class="audio-progress">
+                                    <div class="audio-progress-fill" id="audioProgress"></div>
+                                </div>
+                            </div>
+                            <div class="audio-time" id="audioTime">00:00 / 05:30</div>
+                        </div>
+                    </div>
+
+                    <div class="lesson-text">
+                        <h3 style="color: var(--primary-dark); margin: var(--space-xl) 0 var(--space-md);">三、记忆技巧</h3>
+                        <p>
+                            词根记忆的关键是<strong>建立"词根-含义"的直接关联</strong>，而不是逐个字母背单词。试着用下面的方法：
+                        </p>
+                        <ul style="margin: var(--space-md) 0 var(--space-lg) var(--space-xl); line-height: 2;">
+                            <li>看到 <strong>spect</strong> → 直接想到"看"</li>
+                            <li>看到一个新词 <strong>retrospect</strong> → retro（向后）+ spect（看）→ 回顾</li>
+                            <li>不要翻译成中文再理解</li>
+                        </ul>
+                    </div>
+
+                    <!-- 练习区域 -->
+                    <div class="exercise-section">
+                        <div class="exercise-card">
+                            <div class="exercise-header">
+                                <h3 class="exercise-title">📝 随堂练习</h3>
+                                <span class="exercise-type">词汇理解</span>
+                            </div>
+
+                            <div class="question">
+                                1. 根据词根 "spect" 的含义，判断 "spectator" 的意思最可能是：
+                            </div>
+
+                            <div class="options">
+                                <div class="option" data-correct="true" onclick="selectOption(this)">
+                                    <div class="option-letter">A</div>
+                                    <div class="option-text">观众，旁观者（观看比赛/表演的人）</div>
+                                </div>
+                                <div class="option" data-correct="false" onclick="selectOption(this)">
+                                    <div class="option-letter">B</div>
+                                    <div class="option-text">检查员，审查者</div>
+                                </div>
+                                <div class="option" data-correct="false" onclick="selectOption(this)">
+                                    <div class="option-letter">C</div>
+                                    <div class="option-text">演讲者，发言人</div>
+                                </div>
+                                <div class="option" data-correct="false" onclick="selectOption(this)">
+                                    <div class="option-letter">D</div>
+                                    <div class="option-text">专家，专业人士</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 第二个练习 -->
+                        <div class="exercise-card" style="margin-top: var(--space-lg);">
+                            <div class="exercise-header">
+                                <h3 class="exercise-title">📝 词汇应用</h3>
+                                <span class="exercise-type">写作表达</span>
+                            </div>
+
+                            <div class="question">
+                                2. 在雅思写作中，想要表达"观点的多样性"，以下哪个表达最准确？
+                            </div>
+
+                            <div class="options">
+                                <div class="option" data-correct="false" onclick="selectOption(this)">
+                                    <div class="option-letter">A</div>
+                                    <div class="option-text">diverse opinions</div>
+                                </div>
+                                <div class="option" data-correct="true" onclick="selectOption(this)">
+                                    <div class="option-letter">B</div>
+                                    <div class="option-text">a diverse range of perspectives</div>
+                                </div>
+                                <div class="option" data-correct="false" onclick="selectOption(this)">
+                                    <div class="option-letter">C</div>
+                                    <div class="option-text">spectacular views</div>
+                                </div>
+                                <div class="option" data-correct="false" onclick="selectOption(this)">
+                                    <div class="option-letter">D</div>
+                                    <div class="option-text">convert opinions</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 侧边栏 -->
+            <div class="lesson-sidebar">
+                <!-- 目录 -->
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">📑 课程目录</h3>
+                    <ul class="toc-list">
+                        <li class="toc-item active">
+                            <a href="#">
+                                <span class="num">1</span>
+                                词根 "spect" = 看 / 观察
+                            </a>
+                        </li>
+                        <li class="toc-item">
+                            <a href="#">
+                                <span class="num">2</span>
+                                词根 "vert/vers" = 转
+                            </a>
+                        </li>
+                        <li class="toc-item">
+                            <a href="#">
+                                <span class="num">3</span>
+                                记忆技巧
+                            </a>
+                        </li>
+                        <li class="toc-item">
+                            <a href="#">
+                                <span class="num">4</span>
+                                随堂练习
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 学习笔记 -->
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">📝 学习笔记</h3>
+                    <textarea class="notes-area" placeholder="在这里记录你的学习心得、难点或疑问..."></textarea>
+                </div>
+
+                <!-- 学习进度 -->
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">📊 学习进度</h3>
+                    <div style="text-align: center; padding: var(--space-md) 0;">
+                        <div style="font-size: 2.5rem; font-family: 'Playfair Display', serif; color: var(--primary-red); font-weight: 700;">65%</div>
+                        <div style="font-size: 0.85rem; color: var(--text-light);">完成度</div>
+                    </div>
+                    <div style="display: flex; gap: var(--space-md); text-align: center; margin-top: var(--space-md);">
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; color: var(--primary-dark);">04:32</div>
+                            <div style="font-size: 0.75rem; color: var(--text-light);">已学习</div>
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; color: var(--primary-dark);">02:28</div>
+                            <div style="font-size: 0.75rem; color: var(--text-light);">剩余</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">PathFinder</div>
+            <p class="footer-text">IELTS Learning Protocol · AI-Powered English Deep Learning System</p>
+        </div>
+    </footer>
+
+    <script>
+        // 简单音频模拟
+        let isPlaying = false;
+        let progress = 0;
+        const playBtn = document.getElementById('playBtn');
+        const audioProgress = document.getElementById('audioProgress');
+        const audioTime = document.getElementById('audioTime');
+
+        playBtn.addEventListener('click', function() {
+            isPlaying = !isPlaying;
+            playBtn.textContent = isPlaying ? '⏸' : '▶';
+
+            if (isPlaying) {
+                // 模拟音频播放
+                let totalSeconds = 330; // 5:30 = 330秒
+                let currentSeconds = Math.floor(progress * totalSeconds / 100);
+
+                let interval = setInterval(() => {
+                    if (!isPlaying) {
+                        clearInterval(interval);
+                        return;
+                    }
+
+                    currentSeconds++;
+                    progress = (currentSeconds / totalSeconds) * 100;
+                    audioProgress.style.width = progress + '%';
+
+                    let mins = Math.floor(currentSeconds / 60);
+                    let secs = currentSeconds % 60;
+                    audioTime.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')} / 05:30`;
+
+                    if (currentSeconds >= totalSeconds) {
+                        isPlaying = false;
+                        playBtn.textContent = '▶';
+                        clearInterval(interval);
+                    }
+                }, 1000);
+            }
+        });
+
+        // 选择答案
+        function selectOption(element) {
+            const parent = element.closest('.options');
+            const options = parent.querySelectorAll('.option');
+
+            options.forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+
+            // 简单反馈
+            const isCorrect = element.dataset.correct === 'true';
+            setTimeout(() => {
+                if (isCorrect) {
+                    element.style.borderColor = '#2e7d32';
+                    element.style.background = 'rgba(46, 125, 50, 0.1)';
+                } else {
+                    element.style.borderColor = '#c62828';
+                    element.style.background = 'rgba(198, 40, 40, 0.1)';
+                }
+            }, 200);
+        }
+    </script>
+
+</body>
+</html>

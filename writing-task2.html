@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing Task 2 - PathFinder</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .task2-hero {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1a252f 100%);
+            color: white;
+            padding: var(--space-2xl) 0;
+        }
+
+        .task2-hero-inner {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xl);
+        }
+
+        .task2-badge-large {
+            width: 72px;
+            height: 72px;
+            background: rgba(255,255,255,0.12);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+            line-height: 1.2;
+            text-align: center;
+        }
+
+        .task2-hero-info h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.9rem;
+            margin-bottom: var(--space-xs);
+        }
+
+        .task2-hero-info p {
+            font-size: 0.95rem;
+            opacity: 0.8;
+            line-height: 1.7;
+        }
+
+        .coming-soon-block {
+            max-width: 600px;
+            margin: var(--space-2xl) auto;
+            text-align: center;
+            padding: var(--space-2xl);
+            background: var(--bg-white);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-lg);
+        }
+
+        .coming-soon-block .icon {
+            font-size: 3rem;
+            margin-bottom: var(--space-lg);
+        }
+
+        .coming-soon-block h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--primary-dark);
+            margin-bottom: var(--space-md);
+        }
+
+        .coming-soon-block p {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            line-height: 1.8;
+            margin-bottom: var(--space-lg);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            color: var(--primary-red);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            padding: var(--space-md) var(--space-xl);
+            border: 1px solid var(--primary-red);
+            border-radius: var(--radius-md);
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-red);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">PF</div>
+                    <div class="logo-text">PathFinder<span>IELTS Learning Protocol</span></div>
+                </a>
+                <nav class="nav">
+                    <a href="index.html" class="nav-item">Modules</a>
+                    <a href="#" class="nav-item">My Progress</a>
+                    <a href="#" class="nav-item">Practice</a>
+                    <a href="#" class="nav-item">AI Assistant</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="breadcrumb" style="padding-top: var(--space-lg);">
+            <a href="index.html">Home</a>
+            <span class="breadcrumb-sep">›</span>
+            <a href="module-writing.html">Writing</a>
+            <span class="breadcrumb-sep">›</span>
+            <span>Task 2</span>
+        </div>
+    </div>
+
+    <section class="task2-hero">
+        <div class="container">
+            <div class="task2-hero-inner">
+                <div class="task2-badge-large">Task<br>2</div>
+                <div class="task2-hero-info">
+                    <h1>Academic Essay Writing</h1>
+                    <p>
+                        Write discursive essays presenting arguments, discussing issues and
+                        evaluating ideas across a range of academic topics.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="coming-soon-block">
+            <div class="icon">📝</div>
+            <h2>Content Coming Soon</h2>
+            <p>
+                Task 2 content is currently being developed.<br>
+                Return to Task 1 to continue your learning journey.
+            </p>
+            <a href="module-writing.html" class="back-btn">← Back to Writing</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">PathFinder</div>
+            <p class="footer-text">IELTS Learning Protocol</p>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PathFinder - 扫码访问</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #1a252f 50%, #0d1519 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .qr-card {
+            background: #faf9f7;
+            border-radius: 20px;
+            padding: 50px 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 400px;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 30px;
+        }
+
+        .qr-image {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            display: inline-block;
+            margin-bottom: 30px;
+            border: 1px solid #e8e4de;
+        }
+
+        .qr-image img {
+            display: block;
+            width: 200px;
+            height: 200px;
+        }
+
+        .url-box {
+            background: #2c3e50;
+            color: white;
+            padding: 16px 24px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            word-break: break-all;
+            margin-bottom: 20px;
+        }
+
+        .tips {
+            font-size: 0.8rem;
+            color: #999;
+            line-height: 1.6;
+        }
+
+        .tips strong {
+            color: #8b0000;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: #8b0000;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+
+        .download-btn:hover {
+            background: #6b0000;
+        }
+
+        @media (max-width: 480px) {
+            .qr-card {
+                padding: 40px 20px;
+            }
+
+            .qr-image img {
+                width: 180px;
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="qr-card">
+        <div class="logo">PathFinder</div>
+        <div class="subtitle">IELTS Learning Protocol</div>
+
+        <div class="qr-image">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://creative-dodol-b2b28e.netlify.app&color=2c3e50&bgcolor=ffffff" alt="QR Code">
+        </div>
+
+        <div class="url-box">
+            creative-dodol-b2b28e.netlify.app
+        </div>
+
+        <div class="tips">
+            <strong>扫码访问 PathFinder</strong><br>
+            长按二维码 → 保存图片<br>
+            或截图分享给朋友
+        </div>
+
+        <a href="https://creative-dodol-b2b28e.netlify.app" target="_blank" class="download-btn">
+            🔗 打开网站
+        </a>
+    </div>
+
+</body>
+</html>
