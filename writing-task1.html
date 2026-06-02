@@ -597,6 +597,15 @@
             });
             document.querySelectorAll('.chapter-tab')[num - 1].classList.add('active');
         }
+
+        // 页面加载时检查 URL 参数
+        (function() {
+            var params = new URLSearchParams(window.location.search);
+            var chapter = params.get('chapter');
+            if (chapter) {
+                showChapter(parseInt(chapter));
+            }
+        })();
     </script>
 
 </body>
