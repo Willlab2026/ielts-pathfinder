@@ -493,62 +493,39 @@
                 Comprehension Check
             </div>
 
-            <div class="exercise-intro">
-                <strong>Instructions:</strong> Read the two sample questions above carefully, then complete the following exercises. Fill in the blanks and match the items. Click <strong>"Check Answers"</strong> when you are ready to see your results.
-            </div>
-
-            <!-- 填空题 -->
+            <!-- 题目 1：填空 + 下拉选择 -->
             <div class="fill-blank-question">
                 <div class="question-text">
-                    <span class="question-number">1.1</span>
-                    By comparing the two questions, we can see that every Task 1 question contains
-                    <input type="text" class="blank-input" id="q1_1" data-answer="five" placeholder="?"> parts.
-                    They are A, B, C, D and E.
+                    <span class="question-number">1</span>
+                    By comparing the two questions, we can see that every Task 1 question contains 5 parts. They are A, B, C, D and E.
+                    The parts that do <strong>not</strong> change from question to question are
+                    <select class="matching-select" id="q1_fixed" data-answer="A,C,D" style="min-width:160px;">
+                        <option value="">-- Select --</option>
+                        <option value="A,C,D">A, C, D</option>
+                        <option value="A,B,D">A, B, D</option>
+                        <option value="B,C,E">B, C, E</option>
+                        <option value="A,D,E">A, D, E</option>
+                    </select>.
+                    The parts that <strong>change</strong> with each question are
+                    <select class="matching-select" id="q1_change" data-answer="B,E" style="min-width:120px;">
+                        <option value="">-- Select --</option>
+                        <option value="B,E">B, E</option>
+                        <option value="A,C">A, C</option>
+                        <option value="C,D">C, D</option>
+                        <option value="D,E">D, E</option>
+                    </select>.
                 </div>
-                <div class="answer-explanation" id="exp1_1">
-                    <strong>Answer:</strong> five — Both questions clearly show five labeled parts: A, B, C, D, and E.
-                </div>
-            </div>
-
-            <div class="fill-blank-question">
-                <div class="question-text">
-                    <span class="question-number">1.2</span>
-                    Part <input type="text" class="blank-input" id="q1_2" data-answer="A" placeholder="?">
-                    tells you how much time you should spend on this task.
-                </div>
-                <div class="answer-explanation" id="exp1_2">
-                    <strong>Answer:</strong> A — Part A states "You should spend about 20 minutes on this task."
-                </div>
-            </div>
-
-            <div class="fill-blank-question">
-                <div class="question-text">
-                    <span class="question-number">2</span>
-                    Part <input type="text" class="blank-input" id="q2" data-answer="B" placeholder="?">
-                    introduces the <input type="text" class="blank-input" id="q2_2" data-answer="topic" placeholder="?">
-                    of the visual information.
-                </div>
-                <div class="answer-explanation" id="exp2">
-                    <strong>Answer:</strong> B, topic — Part B describes what the visual shows (e.g., "The table below shows the proportion of different categories of families living in poverty in Australia in 1999").
+                <div class="answer-explanation" id="exp1">
+                    <strong>Answers:</strong> A, C, D &nbsp;|&nbsp; B, E<br>
+                    Parts A ("You should spend about 20 minutes"), C ("Summarise the information…") and D ("Write at least 150 words") stay the same in every Task 1 question.
+                    Parts B (the topic sentence describing the visual) and E (the visual itself — table, chart, graph, etc.) change with each question.
                 </div>
             </div>
 
-            <div class="fill-blank-question">
-                <div class="question-text">
-                    <span class="question-number">3</span>
-                    Part <input type="text" class="blank-input" id="q3" data-answer="C" placeholder="?">
-                    tells you what you should do in your writing. In other words, it gives you the
-                    <input type="text" class="blank-input" id="q3_2" data-answer="instructions" placeholder="?">.
-                </div>
-                <div class="answer-explanation" id="exp3">
-                    <strong>Answer:</strong> C, instructions — Part C says "Summarise the information by selecting and reporting the main features, and make comparisons where relevant."
-                </div>
-            </div>
-
-            <!-- 匹配题 -->
+            <!-- 题目 2：匹配题（原来的 4） -->
             <div class="matching-question" style="margin-top: var(--space-xl);">
                 <div class="question-text" style="margin-bottom: var(--space-lg);">
-                    <span class="question-number">4</span>
+                    <span class="question-number">2</span>
                     Match the following descriptions with the correct part (A, B, C, D or E).
                 </div>
 
@@ -561,9 +538,9 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>4.1 It tells you the minimum number of words you must write.</td>
+                            <td>2.1 It tells you the minimum number of words you must write.</td>
                             <td>
-                                <select class="matching-select" id="m4_1" data-answer="D">
+                                <select class="matching-select" id="m2_1" data-answer="D">
                                     <option value="">-- Select --</option>
                                     <option value="A">A</option>
                                     <option value="B">B</option>
@@ -574,9 +551,9 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>4.2 It is where the visual information (graph, table, chart, etc.) is presented.</td>
+                            <td>2.2 It is where the visual information (graph, table, chart, etc.) is presented.</td>
                             <td>
-                                <select class="matching-select" id="m4_2" data-answer="E">
+                                <select class="matching-select" id="m2_2" data-answer="E">
                                     <option value="">-- Select --</option>
                                     <option value="A">A</option>
                                     <option value="B">B</option>
@@ -587,9 +564,9 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>4.3 It tells you how much time you should spend on the task.</td>
+                            <td>2.3 It tells you how much time you should spend on the task.</td>
                             <td>
-                                <select class="matching-select" id="m4_3" data-answer="A">
+                                <select class="matching-select" id="m2_3" data-answer="A">
                                     <option value="">-- Select --</option>
                                     <option value="A">A</option>
                                     <option value="B">B</option>
@@ -600,9 +577,9 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>4.4 It introduces the topic of the visual information.</td>
+                            <td>2.4 It introduces the topic of the visual information.</td>
                             <td>
-                                <select class="matching-select" id="m4_4" data-answer="B">
+                                <select class="matching-select" id="m2_4" data-answer="B">
                                     <option value="">-- Select --</option>
                                     <option value="A">A</option>
                                     <option value="B">B</option>
@@ -613,9 +590,9 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>4.5 It gives you the writing instructions.</td>
+                            <td>2.5 It gives you the writing instructions.</td>
                             <td>
-                                <select class="matching-select" id="m4_5" data-answer="C">
+                                <select class="matching-select" id="m2_5" data-answer="C">
                                     <option value="">-- Select --</option>
                                     <option value="A">A</option>
                                     <option value="B">B</option>
@@ -628,13 +605,13 @@
                     </tbody>
                 </table>
 
-                <div class="answer-explanation" id="exp4">
+                <div class="answer-explanation" id="exp2">
                     <strong>Answers:</strong><br>
-                    4.1 D — "Write at least 150 words."<br>
-                    4.2 E — The visual data (table, chart, graph, etc.)<br>
-                    4.3 A — "You should spend about 20 minutes on this task."<br>
-                    4.4 B — Introduces what the visual is about<br>
-                    4.5 C — "Summarise the information..."
+                    2.1 D — "Write at least 150 words."<br>
+                    2.2 E — The visual data (table, chart, graph, etc.)<br>
+                    2.3 A — "You should spend about 20 minutes on this task."<br>
+                    2.4 B — Introduces what the visual is about<br>
+                    2.5 C — "Summarise the information..."
                 </div>
             </div>
 
@@ -674,28 +651,8 @@
             let correctCount = 0;
             let totalCount = 0;
 
-            // 检查填空题
-            const blankInputs = document.querySelectorAll('.blank-input');
-            blankInputs.forEach(function(input) {
-                totalCount++;
-                const userAnswer = input.value.trim().toLowerCase();
-                const correctAnswer = input.dataset.answer.toLowerCase();
-
-                input.classList.remove('correct', 'incorrect', 'unchecked');
-
-                if (userAnswer === '') {
-                    input.classList.add('unchecked');
-                } else if (userAnswer === correctAnswer) {
-                    input.classList.add('correct');
-                    correctCount++;
-                } else {
-                    input.classList.add('incorrect');
-                }
-            });
-
-            // 检查匹配题
-            const matchingSelects = document.querySelectorAll('.matching-select');
-            matchingSelects.forEach(function(select) {
+            // 检查所有下拉选择（含题目1的多值选项和题目2的匹配题）
+            document.querySelectorAll('.matching-select').forEach(function(select) {
                 totalCount++;
                 const userAnswer = select.value;
                 const correctAnswer = select.dataset.answer;
@@ -738,23 +695,14 @@
 
         // 重置答案
         function resetAnswers() {
-            // 清空填空题
-            document.querySelectorAll('.blank-input').forEach(function(input) {
-                input.value = '';
-                input.classList.remove('correct', 'incorrect');
-                input.classList.add('unchecked');
-            });
-
-            // 重置匹配题
+            // 重置所有下拉
             document.querySelectorAll('.matching-select').forEach(function(select) {
                 select.value = '';
-                select.classList.remove('correct', 'incorrect');
-                select.classList.add('unchecked');
+                select.classList.remove('correct', 'incorrect', 'unchecked');
             });
 
             // 隐藏反馈
-            const feedback = document.getElementById('resultFeedback');
-            feedback.classList.remove('show');
+            document.getElementById('resultFeedback').classList.remove('show');
 
             // 隐藏答案解析
             document.querySelectorAll('.answer-explanation').forEach(function(exp) {
