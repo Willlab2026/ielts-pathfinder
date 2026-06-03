@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.2 Understanding the Task Instruction - PathFinder</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* ===== 课时页专属样式 ===== */
+        .lesson-hero {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1a252f 100%);
+            color: white;
+            padding: var(--space-xl) 0;
+        }
+
+        .lesson-hero-inner {
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+        }
+
+        .lesson-badge {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-red);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .lesson-hero-info h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            margin-bottom: var(--space-xs);
+        }
+
+        .lesson-hero-info p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* ===== 醒目指令句 ===== */
+        .instruction-spotlight {
+            background: var(--bg-white);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            margin-bottom: var(--space-xl);
+            text-align: center;
+        }
+
+        .instruction-spotlight-label {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--primary-red);
+            font-weight: 600;
+            margin-bottom: var(--space-md);
+        }
+
+        .instruction-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            line-height: 1.8;
+            color: var(--primary-dark);
+            padding: var(--space-xl) var(--space-xxl, 3rem);
+            border-left: 5px solid var(--primary-red);
+            border-right: 5px solid var(--primary-red);
+            margin: 0 auto;
+            max-width: 820px;
+            background: linear-gradient(to right, rgba(139,0,0,0.04), transparent, rgba(139,0,0,0.04));
+            border-radius: var(--radius-md);
+            font-style: italic;
+        }
+
+        /* ===== 练习区域 ===== */
+        .exercise-area {
+            background: var(--bg-white);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            margin-bottom: var(--space-xl);
+        }
+
+        .exercise-area-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--primary-dark);
+            margin-bottom: var(--space-md);
+            padding-bottom: var(--space-md);
+            border-bottom: 1px solid var(--border-soft);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .exercise-area-title .num {
+            width: 28px;
+            height: 28px;
+            background: var(--primary-red);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .exercise-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            margin-bottom: var(--space-lg);
+            line-height: 1.6;
+        }
+
+        /* ===== 2.1 关键词填写 ===== */
+        .keyword-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .keyword-list li {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            font-size: 0.95rem;
+            color: var(--text-dark);
+        }
+
+        .keyword-num {
+            width: 28px;
+            height: 28px;
+            background: var(--primary-dark);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.82rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .keyword-input {
+            flex: 1;
+            max-width: 320px;
+            padding: 8px 14px;
+            border: 2px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem;
+            background: var(--bg-cream);
+            transition: all 0.2s;
+        }
+
+        .keyword-input:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            background: #fff;
+        }
+
+        .keyword-input.correct {
+            border-color: #27ae60;
+            background: rgba(39, 174, 96, 0.08);
+        }
+
+        .keyword-input.incorrect {
+            border-color: #e74c3c;
+            background: rgba(231, 76, 60, 0.08);
+        }
+
+        /* ===== 2.2 匹配题 ===== */
+        .matching-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-xl);
+            margin-top: var(--space-lg);
+        }
+
+        .matching-col h4 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--primary-red);
+            font-weight: 600;
+            margin-bottom: var(--space-md);
+            padding-bottom: var(--space-sm);
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        .matching-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: var(--space-sm);
+        }
+
+        .matching-table th,
+        .matching-table td {
+            padding: var(--space-md) var(--space-lg);
+            text-align: left;
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        .matching-table th {
+            background: var(--bg-cream);
+            font-weight: 600;
+            color: var(--primary-dark);
+            font-size: 0.88rem;
+        }
+
+        .matching-table td {
+            font-size: 0.93rem;
+            color: var(--text-dark);
+        }
+
+        .matching-select {
+            padding: 6px 10px;
+            border: 2px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            background: var(--bg-white);
+            cursor: pointer;
+            min-width: 70px;
+            transition: all 0.2s;
+        }
+
+        .matching-select:focus {
+            outline: none;
+            border-color: var(--primary-red);
+        }
+
+        .matching-select.correct {
+            border-color: #27ae60;
+            background: rgba(39, 174, 96, 0.1);
+            color: #27ae60;
+            font-weight: 600;
+        }
+
+        .matching-select.incorrect {
+            border-color: #e74c3c;
+            background: rgba(231, 76, 60, 0.1);
+            color: #e74c3c;
+        }
+
+        /* ===== 2.3 判断题 ===== */
+        .tf-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+            margin-top: var(--space-md);
+        }
+
+        .tf-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-md);
+            padding: var(--space-md) var(--space-lg);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-soft);
+            background: var(--bg-cream);
+            transition: background 0.2s;
+        }
+
+        .tf-item:hover {
+            background: var(--bg-white);
+        }
+
+        .tf-item.correct-row {
+            background: rgba(39, 174, 96, 0.06);
+            border-color: rgba(39, 174, 96, 0.3);
+        }
+
+        .tf-item.incorrect-row {
+            background: rgba(231, 76, 60, 0.06);
+            border-color: rgba(231, 76, 60, 0.3);
+        }
+
+        .tf-num {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--primary-red);
+            min-width: 20px;
+            padding-top: 2px;
+        }
+
+        .tf-statement {
+            flex: 1;
+            font-size: 0.93rem;
+            line-height: 1.65;
+            color: var(--text-dark);
+        }
+
+        .tf-options {
+            display: flex;
+            gap: var(--space-sm);
+            flex-shrink: 0;
+        }
+
+        .tf-btn {
+            width: 36px;
+            height: 36px;
+            border: 2px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            background: var(--bg-white);
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.18s;
+            color: var(--text-gray);
+        }
+
+        .tf-btn:hover {
+            border-color: var(--primary-dark);
+            color: var(--primary-dark);
+        }
+
+        .tf-btn.selected-T {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+            color: white;
+        }
+
+        .tf-btn.selected-F {
+            background: var(--primary-red);
+            border-color: var(--primary-red);
+            color: white;
+        }
+
+        .tf-btn.correct-btn {
+            background: #27ae60;
+            border-color: #27ae60;
+            color: white;
+        }
+
+        .tf-btn.incorrect-btn {
+            background: #e74c3c;
+            border-color: #e74c3c;
+            color: white;
+        }
+
+        /* ===== 答案解析 ===== */
+        .answer-explanation {
+            display: none;
+            margin-top: var(--space-sm);
+            padding: var(--space-sm) var(--space-md);
+            background: rgba(44, 62, 80, 0.05);
+            border-left: 3px solid var(--primary-dark);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        .answer-explanation.show {
+            display: block;
+        }
+
+        /* ===== 操作按钮 ===== */
+        .action-bar {
+            display: flex;
+            gap: var(--space-md);
+            margin: var(--space-xl) 0;
+            justify-content: center;
+        }
+
+        .btn-check {
+            padding: 12px 36px;
+            background: var(--primary-red);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-check:hover {
+            background: #6b0000;
+            transform: translateY(-1px);
+        }
+
+        .btn-reset {
+            padding: 12px 24px;
+            background: transparent;
+            color: var(--text-gray);
+            border: 2px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-reset:hover {
+            border-color: var(--primary-dark);
+            color: var(--primary-dark);
+        }
+
+        /* ===== 结果反馈 ===== */
+        .result-feedback {
+            display: none;
+            padding: var(--space-lg) var(--space-xl);
+            border-radius: var(--radius-md);
+            text-align: center;
+            font-weight: 600;
+            font-size: 1rem;
+            margin: var(--space-lg) 0;
+        }
+
+        .result-feedback.show {
+            display: block;
+        }
+
+        .result-feedback.success {
+            background: rgba(39, 174, 96, 0.12);
+            color: #1e8449;
+            border: 1px solid rgba(39, 174, 96, 0.3);
+        }
+
+        .result-feedback.partial {
+            background: rgba(139, 0, 0, 0.07);
+            color: var(--primary-red);
+            border: 1px solid rgba(139, 0, 0, 0.2);
+        }
+
+        /* ===== 答案解析总览（2.2 / 2.3） ===== */
+        .section-answer-block {
+            display: none;
+            background: var(--bg-cream);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+            margin-top: var(--space-lg);
+            font-size: 0.9rem;
+            line-height: 2;
+        }
+
+        .section-answer-block.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .instruction-quote {
+                font-size: 1.1rem;
+                padding: var(--space-lg) var(--space-lg);
+            }
+            .matching-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">P</span>
+                <span class="logo-text">PathFinder</span>
+            </a>
+            <div class="nav-breadcrumb">
+                <a href="index.html">Home</a>
+                <span class="bc-sep">›</span>
+                <a href="module-writing.html">Writing</a>
+                <span class="bc-sep">›</span>
+                <a href="writing-task1.html?chapter=1">Task 1 — Ch.1</a>
+                <span class="bc-sep">›</span>
+                <span>1.2</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 课时标题区 -->
+    <div class="lesson-hero">
+        <div class="container">
+            <div class="lesson-hero-inner">
+                <div class="lesson-badge">1.2</div>
+                <div class="lesson-hero-info">
+                    <h1>Understanding the Task Instruction</h1>
+                    <p>Chapter 1 · Understanding Task 1</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主内容 -->
+    <div class="container" style="padding-top: var(--space-xxl, 2.5rem); padding-bottom: var(--space-xxl, 2.5rem);">
+
+        <!-- 醒目指令句 -->
+        <div class="instruction-spotlight">
+            <div class="instruction-spotlight-label">Task 1 Writing Instruction</div>
+            <div class="instruction-quote">
+                Summarise the information by selecting and reporting the main features,
+                and make comparisons where relevant.
+            </div>
+        </div>
+
+        <!-- 练习 2.1 -->
+        <div class="exercise-area">
+            <div class="exercise-area-title">
+                <span class="num">2.1</span>
+                Find the key words and phrases
+            </div>
+            <p class="exercise-subtitle">
+                Read the instruction again. Write down the five key words or phrases that you think are the most important.
+            </p>
+
+            <ul class="keyword-list">
+                <li>
+                    <span class="keyword-num">1</span>
+                    <input type="text" class="keyword-input" id="kw1" data-answer="summarise" placeholder="key word / phrase">
+                </li>
+                <li>
+                    <span class="keyword-num">2</span>
+                    <input type="text" class="keyword-input" id="kw2" data-answer="selecting" placeholder="key word / phrase">
+                </li>
+                <li>
+                    <span class="keyword-num">3</span>
+                    <input type="text" class="keyword-input" id="kw3" data-answer="main features" placeholder="key word / phrase">
+                </li>
+                <li>
+                    <span class="keyword-num">4</span>
+                    <input type="text" class="keyword-input" id="kw4" data-answer="make comparisons" placeholder="key word / phrase">
+                </li>
+                <li>
+                    <span class="keyword-num">5</span>
+                    <input type="text" class="keyword-input" id="kw5" data-answer="where relevant" placeholder="key word / phrase">
+                </li>
+            </ul>
+
+            <div class="answer-explanation" id="exp_kw">
+                <strong>Answers:</strong> 1. summarise &nbsp; 2. selecting &nbsp; 3. main features &nbsp; 4. make comparisons &nbsp; 5. where relevant
+            </div>
+        </div>
+
+        <!-- 练习 2.2 -->
+        <div class="exercise-area">
+            <div class="exercise-area-title">
+                <span class="num">2.2</span>
+                Match the words and phrases
+            </div>
+            <p class="exercise-subtitle">
+                Match the key words or phrases from the instruction with their Chinese meanings.
+            </p>
+
+            <table class="matching-table">
+                <thead>
+                    <tr>
+                        <th style="width: 55%;">Words / Phrases</th>
+                        <th>Meaning (A – E)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1. summarise</td>
+                        <td>
+                            <select class="matching-select" id="m22_1" data-answer="D">
+                                <option value="">--</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="E">E</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2. selecting</td>
+                        <td>
+                            <select class="matching-select" id="m22_2" data-answer="E">
+                                <option value="">--</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="E">E</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3. main features</td>
+                        <td>
+                            <select class="matching-select" id="m22_3" data-answer="A">
+                                <option value="">--</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="E">E</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4. make comparisons</td>
+                        <td>
+                            <select class="matching-select" id="m22_4" data-answer="B">
+                                <option value="">--</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="E">E</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5. where relevant</td>
+                        <td>
+                            <select class="matching-select" id="m22_5" data-answer="C">
+                                <option value="">--</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="E">E</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- 词义参考列 -->
+            <div style="margin-top: var(--space-lg); padding: var(--space-md) var(--space-lg); background: var(--bg-cream); border-radius: var(--radius-md); font-size: 0.9rem; line-height: 2; color: var(--text-dark);">
+                <strong>Meanings:</strong><br>
+                A. 主要特征 &nbsp;&nbsp; B. 进行比较 &nbsp;&nbsp; C. 在相关 / 合适的时候 &nbsp;&nbsp; D. 概括 / 总结信息 &nbsp;&nbsp; E. 选择（信息）
+            </div>
+
+            <div class="answer-explanation" id="exp_22">
+                <strong>Answers:</strong> 1 → D &nbsp; 2 → E &nbsp; 3 → A &nbsp; 4 → B &nbsp; 5 → C
+            </div>
+        </div>
+
+        <!-- 练习 2.3 -->
+        <div class="exercise-area">
+            <div class="exercise-area-title">
+                <span class="num">2.3</span>
+                True or False
+            </div>
+            <p class="exercise-subtitle">
+                Read each statement and decide whether it is <strong>True (T)</strong> or <strong>False (F)</strong> according to the Task 1 instruction.
+            </p>
+
+            <div class="tf-list">
+                <!-- 用 JS 渲染，数据在下方 -->
+            </div>
+
+            <div class="answer-explanation" id="exp_23">
+                <strong>Answers:</strong> 1-F &nbsp; 2-T &nbsp; 3-T &nbsp; 4-F &nbsp; 5-T &nbsp; 6-T &nbsp; 7-T &nbsp; 8-T &nbsp; 9-T &nbsp; 10-T &nbsp; 11-F &nbsp; 12-T &nbsp; 13-T &nbsp; 14-T &nbsp; 15-F
+            </div>
+        </div>
+
+        <!-- 操作按钮 -->
+        <div class="action-bar">
+            <button class="btn-check" onclick="checkAnswers()">Check Answers</button>
+            <button class="btn-reset" onclick="resetAnswers()">Reset</button>
+        </div>
+
+        <!-- 结果反馈 -->
+        <div class="result-feedback" id="resultFeedback"></div>
+
+        <!-- 返回目录 -->
+        <div style="text-align: center; margin-top: var(--space-xl);">
+            <a href="writing-task1.html?chapter=1" style="color: var(--text-gray); font-size: 0.9rem; text-decoration: none;">
+                ← Back to Task 1 Contents
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>PathFinder · IELTS Learning Protocol</p>
+        </div>
+    </footer>
+
+    <script>
+        // ===== T/F 题目数据 =====
+        var tfQuestions = [
+            { num: 1,  text: "In Task 1, you need to write every piece of information in the chart.", answer: "F" },
+            { num: 2,  text: "In Task 1, you need to summarise the information.", answer: "T" },
+            { num: 3,  text: '"Selecting" means you should choose the most important information.', answer: "T" },
+            { num: 4,  text: "In Task 1, all details are equally important.", answer: "F" },
+            { num: 5,  text: '"Main features" means the most important information in the chart.', answer: "T" },
+            { num: 6,  text: "Main features may include overall trends.", answer: "T" },
+            { num: 7,  text: "Main features may include the highest and lowest figures.", answer: "T" },
+            { num: 8,  text: "Main features may include important differences.", answer: "T" },
+            { num: 9,  text: "In a process task, main features may include the main stages.", answer: "T" },
+            { num: 10, text: "In a map task, main features may include the overall direction of change.", answer: "T" },
+            { num: 11, text: '"Make comparisons" means every sentence must contain a comparison.', answer: "F" },
+            { num: 12, text: "Comparisons should be made when they are relevant.", answer: "T" },
+            { num: 13, text: "Comparison is often an important part of Task 1 writing.", answer: "T" },
+            { num: 14, text: "In Task 1, you should first look at the whole picture, not only small details.", answer: "T" },
+            { num: 15, text: "Task 1 is mainly about giving your opinion.", answer: "F" }
+        ];
+
+        // ===== 渲染 T/F 题目 =====
+        (function renderTF() {
+            var list = document.querySelector('.tf-list');
+            tfQuestions.forEach(function(q) {
+                var item = document.createElement('div');
+                item.className = 'tf-item';
+                item.id = 'tf_row_' + q.num;
+                item.innerHTML =
+                    '<span class="tf-num">' + q.num + '</span>' +
+                    '<span class="tf-statement">' + q.text + '</span>' +
+                    '<div class="tf-options">' +
+                        '<button class="tf-btn" id="tf_T_' + q.num + '" onclick="selectTF(' + q.num + ', \'T\')">T</button>' +
+                        '<button class="tf-btn" id="tf_F_' + q.num + '" onclick="selectTF(' + q.num + ', \'F\')">F</button>' +
+                    '</div>';
+                list.appendChild(item);
+            });
+        })();
+
+        // ===== 点击 T/F 按钮 =====
+        function selectTF(num, val) {
+            var btnT = document.getElementById('tf_T_' + num);
+            var btnF = document.getElementById('tf_F_' + num);
+            btnT.classList.remove('selected-T', 'selected-F');
+            btnF.classList.remove('selected-T', 'selected-F');
+            if (val === 'T') {
+                btnT.classList.add('selected-T');
+            } else {
+                btnF.classList.add('selected-F');
+            }
+            // 标记用户选择
+            btnT.dataset.userSelected = (val === 'T') ? 'T' : '';
+            btnF.dataset.userSelected = (val === 'F') ? 'F' : '';
+        }
+
+        // ===== 核对答案 =====
+        function checkAnswers() {
+            var totalCount = 0;
+            var correctCount = 0;
+
+            // --- 2.1 关键词 ---
+            var kwAnswers = ['summarise', 'selecting', 'main features', 'make comparisons', 'where relevant'];
+            for (var i = 1; i <= 5; i++) {
+                totalCount++;
+                var inp = document.getElementById('kw' + i);
+                var userVal = inp.value.trim().toLowerCase();
+                var correctVal = kwAnswers[i - 1].toLowerCase();
+                inp.classList.remove('correct', 'incorrect');
+                if (userVal === '') {
+                    // leave as is
+                } else if (userVal === correctVal) {
+                    inp.classList.add('correct');
+                    correctCount++;
+                } else {
+                    inp.classList.add('incorrect');
+                }
+            }
+            document.getElementById('exp_kw').classList.add('show');
+
+            // --- 2.2 匹配 ---
+            document.querySelectorAll('[id^="m22_"]').forEach(function(sel) {
+                totalCount++;
+                sel.classList.remove('correct', 'incorrect');
+                if (sel.value === '') return;
+                if (sel.value === sel.dataset.answer) {
+                    sel.classList.add('correct');
+                    correctCount++;
+                } else {
+                    sel.classList.add('incorrect');
+                }
+            });
+            document.getElementById('exp_22').classList.add('show');
+
+            // --- 2.3 T/F ---
+            tfQuestions.forEach(function(q) {
+                totalCount++;
+                var btnT = document.getElementById('tf_T_' + q.num);
+                var btnF = document.getElementById('tf_F_' + q.num);
+                var row  = document.getElementById('tf_row_' + q.num);
+                var userAns = '';
+                if (btnT.classList.contains('selected-T')) userAns = 'T';
+                if (btnF.classList.contains('selected-F')) userAns = 'F';
+
+                // 清除之前状态
+                btnT.classList.remove('selected-T', 'selected-F', 'correct-btn', 'incorrect-btn');
+                btnF.classList.remove('selected-T', 'selected-F', 'correct-btn', 'incorrect-btn');
+                row.classList.remove('correct-row', 'incorrect-row');
+
+                if (userAns === '') return;
+
+                if (userAns === q.answer) {
+                    // 正确：高亮正确按钮为绿色
+                    var correctBtn = (q.answer === 'T') ? btnT : btnF;
+                    correctBtn.classList.add('correct-btn');
+                    row.classList.add('correct-row');
+                    correctCount++;
+                } else {
+                    // 错误：红色标出学生的选择，绿色标出正确答案
+                    var wrongBtn   = (userAns  === 'T') ? btnT : btnF;
+                    var rightBtn   = (q.answer === 'T') ? btnT : btnF;
+                    wrongBtn.classList.add('incorrect-btn');
+                    rightBtn.classList.add('correct-btn');
+                    row.classList.add('incorrect-row');
+                }
+            });
+            document.getElementById('exp_23').classList.add('show');
+
+            // --- 反馈 ---
+            var answered = document.querySelectorAll('.keyword-input.correct, .keyword-input.incorrect, .matching-select.correct, .matching-select.incorrect').length;
+            var fb = document.getElementById('resultFeedback');
+            var pct = Math.round((correctCount / totalCount) * 100);
+
+            if (pct === 100) {
+                fb.className = 'result-feedback show success';
+                fb.innerHTML = '🎉 Excellent! All ' + totalCount + ' questions correct!';
+            } else if (pct >= 60) {
+                fb.className = 'result-feedback show partial';
+                fb.innerHTML = '👍 Good job! ' + correctCount + ' / ' + totalCount + ' correct (' + pct + '%). Review the highlighted items below.';
+            } else {
+                fb.className = 'result-feedback show partial';
+                fb.innerHTML = '💪 Keep going! ' + correctCount + ' / ' + totalCount + ' correct (' + pct + '%). Study the answers and try again.';
+            }
+
+            fb.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // ===== 重置 =====
+        function resetAnswers() {
+            // 2.1
+            for (var i = 1; i <= 5; i++) {
+                var inp = document.getElementById('kw' + i);
+                inp.value = '';
+                inp.classList.remove('correct', 'incorrect');
+            }
+            document.getElementById('exp_kw').classList.remove('show');
+
+            // 2.2
+            document.querySelectorAll('[id^="m22_"]').forEach(function(sel) {
+                sel.value = '';
+                sel.classList.remove('correct', 'incorrect');
+            });
+            document.getElementById('exp_22').classList.remove('show');
+
+            // 2.3
+            tfQuestions.forEach(function(q) {
+                var btnT = document.getElementById('tf_T_' + q.num);
+                var btnF = document.getElementById('tf_F_' + q.num);
+                var row  = document.getElementById('tf_row_' + q.num);
+                btnT.className = 'tf-btn';
+                btnF.className = 'tf-btn';
+                row.classList.remove('correct-row', 'incorrect-row');
+            });
+            document.getElementById('exp_23').classList.remove('show');
+
+            // 反馈
+            document.getElementById('resultFeedback').className = 'result-feedback';
+        }
+    </script>
+
+</body>
+</html>
