@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.3 Understanding the Types of Information — PathFinder</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* ===== Lesson page base ===== */
+        .lesson-hero {
+            background: var(--primary-dark);
+            color: white;
+            padding: var(--space-xl) 0;
+        }
+        .lesson-hero .breadcrumb { color: rgba(255,255,255,0.65); font-size: 0.82rem; margin-bottom: var(--space-sm); }
+        .lesson-hero .breadcrumb a { color: rgba(255,255,255,0.65); text-decoration: none; }
+        .lesson-hero .breadcrumb a:hover { color: white; }
+        .lesson-hero h1 { font-size: 1.6rem; font-weight: 700; margin: var(--space-xs) 0 0; letter-spacing: 0.02em; }
+        .lesson-hero .lesson-meta { margin-top: var(--space-md); font-size: 0.84rem; opacity: 0.75; }
+        .lesson-hero .lesson-meta span { margin-right: var(--space-lg); }
+
+        .lesson-body { padding: var(--space-2xl) 0; }
+
+        /* ===== Exercise sections ===== */
+        .exercise-section {
+            background: white;
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl) var(--space-2xl);
+            margin-bottom: var(--space-xl);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .exercise-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            border-left: 4px solid var(--primary-red);
+            padding-left: var(--space-md);
+            margin-bottom: var(--space-xs);
+        }
+        .exercise-instruction {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: var(--space-xl);
+            line-height: 1.7;
+        }
+
+        /* ===== Exercise 1: Word-meaning match with dropdowns ===== */
+        .word-match-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-lg) var(--space-2xl);
+        }
+        .word-match-row {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-sm) var(--space-md);
+            background: var(--bg-warm);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-soft);
+        }
+        .word-label {
+            font-weight: 600;
+            color: var(--primary-dark);
+            min-width: 28px;
+            font-size: 0.88rem;
+        }
+        .word-text {
+            font-style: italic;
+            color: var(--text-body);
+            flex: 1;
+            font-size: 0.92rem;
+        }
+        .word-arrow { color: var(--text-light); font-size: 1.1rem; }
+
+        .meaning-list {
+            margin-top: var(--space-xl);
+            background: #f8f7f5;
+            border-radius: var(--radius-md);
+            padding: var(--space-md) var(--space-xl);
+        }
+        .meaning-list-title {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: var(--space-md);
+        }
+        .meaning-items {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-sm) var(--space-lg);
+        }
+        .meaning-item {
+            font-size: 0.88rem;
+            color: var(--text-body);
+        }
+        .meaning-item .letter {
+            font-weight: 700;
+            color: var(--primary-red);
+            margin-right: 4px;
+        }
+
+        /* ===== Exercise 2: Chart identification ===== */
+        .chart-image-container {
+            text-align: center;
+            margin-bottom: var(--space-xl);
+        }
+        .chart-image-container img {
+            max-width: 100%;
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        .chart-answers-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-md);
+        }
+        .chart-answer-row {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            background: var(--bg-warm);
+            border-radius: var(--radius-md);
+            padding: var(--space-sm) var(--space-md);
+            border: 1px solid var(--border-soft);
+        }
+        .chart-num {
+            font-weight: 700;
+            color: var(--primary-dark);
+            font-size: 1rem;
+            min-width: 24px;
+        }
+
+        /* ===== Exercise 3: Image + text identification ===== */
+        .ex3-item {
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin-bottom: var(--space-lg);
+        }
+        .ex3-item-body {
+            display: flex;
+            gap: 0;
+            align-items: stretch;
+        }
+        .ex3-text-side {
+            flex: 1;
+            padding: var(--space-lg) var(--space-xl);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: var(--space-md);
+        }
+        .ex3-item-number {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--primary-red);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .ex3-item-desc {
+            font-size: 0.93rem;
+            color: var(--text-body);
+            line-height: 1.65;
+            font-style: italic;
+        }
+        .ex3-answer-row {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            margin-top: var(--space-sm);
+        }
+        .ex3-answer-label {
+            font-size: 0.83rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+        .ex3-image-side {
+            flex: 0 0 45%;
+            max-width: 45%;
+            border-left: 1px solid var(--border-soft);
+            background: #fafaf9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-md);
+        }
+        .ex3-image-side img {
+            max-width: 100%;
+            max-height: 220px;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+
+        /* ===== Answer key hint ===== */
+        .answer-key-hint {
+            background: #e8f5e9;
+            border: 1px solid #a5d6a7;
+            border-radius: var(--radius-md);
+            padding: var(--space-sm) var(--space-lg);
+            font-size: 0.85rem;
+            color: #2e7d32;
+        }
+        .answer-key-hint strong { color: #1b5e20; }
+
+        /* ===== Shared form elements ===== */
+        .matching-select {
+            border: 2px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            padding: 4px 10px;
+            font-size: 0.88rem;
+            color: var(--text-body);
+            background: white;
+            cursor: pointer;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .matching-select:focus { border-color: var(--primary-dark); }
+        .matching-select.correct { border-color: #4caf50; background: #e8f5e9; color: #2e7d32; font-weight: 600; }
+        .matching-select.incorrect { border-color: #f44336; background: #ffebee; color: #c62828; }
+        .matching-select.unchecked { border-color: #ff9800; background: #fff3e0; }
+
+        /* ===== Action buttons ===== */
+        .action-bar {
+            display: flex;
+            gap: var(--space-md);
+            margin-top: var(--space-2xl);
+            padding-top: var(--space-xl);
+            border-top: 1px solid var(--border-soft);
+            flex-wrap: wrap;
+        }
+        .btn-check {
+            background: var(--primary-red);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            padding: var(--space-md) var(--space-2xl);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            letter-spacing: 0.03em;
+            transition: background 0.2s;
+        }
+        .btn-check:hover { background: #6b0000; }
+        .btn-reset {
+            background: white;
+            color: var(--text-body);
+            border: 2px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            padding: var(--space-md) var(--space-xl);
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        .btn-reset:hover { border-color: var(--primary-dark); color: var(--primary-dark); }
+
+        /* ===== Result feedback ===== */
+        .result-feedback {
+            display: none;
+            border-radius: var(--radius-md);
+            padding: var(--space-md) var(--space-xl);
+            font-size: 0.92rem;
+            font-weight: 500;
+            margin-top: var(--space-lg);
+        }
+        .result-feedback.show { display: block; }
+        .result-feedback.success { background: #e8f5e9; border: 1px solid #a5d6a7; color: #2e7d32; }
+        .result-feedback.partial { background: #fff3e0; border: 1px solid #ffcc02; color: #e65100; }
+
+        /* ===== Answer explanation ===== */
+        .answer-explanation {
+            display: none;
+            background: #f9f9f7;
+            border-left: 3px solid #4caf50;
+            padding: var(--space-sm) var(--space-md);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-size: 0.83rem;
+            color: var(--text-light);
+            margin-top: var(--space-sm);
+        }
+        .answer-explanation.show { display: block; }
+        .correct-answer { color: #2e7d32; font-weight: 700; }
+
+        /* ===== Bottom navigation ===== */
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-xl) 0 var(--space-2xl);
+            border-top: 1px solid var(--border-soft);
+            margin-top: var(--space-2xl);
+        }
+        .lesson-nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-sm) var(--space-xl);
+            border-radius: var(--radius-md);
+            font-size: 0.88rem;
+            font-weight: 500;
+            text-decoration: none;
+            border: 2px solid var(--border-soft);
+            color: var(--text-body);
+            transition: all 0.2s;
+        }
+        .lesson-nav-btn:hover { border-color: var(--primary-dark); color: var(--primary-dark); }
+        .lesson-nav-btn.primary {
+            background: var(--primary-dark);
+            color: white;
+            border-color: var(--primary-dark);
+        }
+        .lesson-nav-btn.primary:hover { background: var(--primary-red); border-color: var(--primary-red); }
+
+        @media (max-width: 768px) {
+            .word-match-grid { grid-template-columns: 1fr; }
+            .meaning-items { grid-template-columns: repeat(2, 1fr); }
+            .chart-answers-grid { grid-template-columns: repeat(2, 1fr); }
+            .ex3-item-body { flex-direction: column; }
+            .ex3-image-side {
+                flex: none;
+                max-width: 100%;
+                border-left: none;
+                border-top: 1px solid var(--border-soft);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero -->
+    <div class="lesson-hero">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> ›
+                <a href="module-writing.html">Writing</a> ›
+                <a href="writing-task1.html?chapter=1">Task 1 — Chapter 1</a> ›
+                1.3 Understanding the Types of Information
+            </div>
+            <h1>1.3 Understanding the Types of Information</h1>
+            <div class="lesson-meta">
+                <span>📚 Chapter 1: Understanding Task 1</span>
+                <span>3 Exercises</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Body -->
+    <div class="lesson-body">
+        <div class="container" style="max-width: 860px;">
+
+            <!-- ===== Exercise 1 ===== -->
+            <div class="exercise-section">
+                <div class="exercise-title">Exercise 1</div>
+                <div class="exercise-instruction">
+                    Match the words with their Chinese meanings.
+                </div>
+
+                <!-- Meanings reference panel -->
+                <div class="meaning-list" style="margin-bottom: var(--space-xl);">
+                    <div class="meaning-list-title">Chinese Meanings</div>
+                    <div class="meaning-items">
+                        <div class="meaning-item"><span class="letter">A.</span>饼图</div>
+                        <div class="meaning-item"><span class="letter">B.</span>柱状图</div>
+                        <div class="meaning-item"><span class="letter">C.</span>表格</div>
+                        <div class="meaning-item"><span class="letter">D.</span>地图</div>
+                        <div class="meaning-item"><span class="letter">E.</span>折线图</div>
+                        <div class="meaning-item"><span class="letter">F.</span>示意图</div>
+                    </div>
+                </div>
+
+                <!-- Match rows -->
+                <div class="word-match-grid">
+                    <div class="word-match-row">
+                        <span class="word-label">1.</span>
+                        <span class="word-text">diagram</span>
+                        <span class="word-arrow">→</span>
+                        <select class="matching-select" id="ex1_1" data-answer="F">
+                            <option value="">—</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                            <option value="F">F</option>
+                        </select>
+                    </div>
+                    <div class="word-match-row">
+                        <span class="word-label">2.</span>
+                        <span class="word-text">map</span>
+                        <span class="word-arrow">→</span>
+                        <select class="matching-select" id="ex1_2" data-answer="D">
+                            <option value="">—</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                            <option value="F">F</option>
+                        </select>
+                    </div>
+                    <div class="word-match-row">
+                        <span class="word-label">3.</span>
+                        <span class="word-text">pie chart</span>
+                        <span class="word-arrow">→</span>
+                        <select class="matching-select" id="ex1_3" data-answer="A">
+                            <option value="">—</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                            <option value="F">F</option>
+                        </select>
+                    </div>
+                    <div class="word-match-row">
+                        <span class="word-label">4.</span>
+                        <span class="word-text">table</span>
+                        <span class="word-arrow">→</span>
+                        <select class="matching-select" id="ex1_4" data-answer="C">
+                            <option value="">—</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                            <option value="F">F</option>
+                        </select>
+                    </div>
+                    <div class="word-match-row">
+                        <span class="word-label">5.</span>
+                        <span class="word-text">bar chart</span>
+                        <span class="word-arrow">→</span>
+                        <select class="matching-select" id="ex1_5" data-answer="B">
+                            <option value="">—</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                            <option value="F">F</option>
+                        </select>
+                    </div>
+                    <div class="word-match-row">
+                        <span class="word-label">6.</span>
+                        <span class="word-text">graph</span>
+                        <span class="word-arrow">→</span>
+                        <select class="matching-select" id="ex1_6" data-answer="E">
+                            <option value="">—</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                            <option value="F">F</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="answer-explanation" id="exp_ex1" style="margin-top: var(--space-lg);">
+                    <strong>Answers:</strong>
+                    1 → <span class="correct-answer">F（示意图）</span> &nbsp;
+                    2 → <span class="correct-answer">D（地图）</span> &nbsp;
+                    3 → <span class="correct-answer">A（饼图）</span> &nbsp;
+                    4 → <span class="correct-answer">C（表格）</span> &nbsp;
+                    5 → <span class="correct-answer">B（柱状图）</span> &nbsp;
+                    6 → <span class="correct-answer">E（折线图）</span>
+                </div>
+            </div>
+
+            <!-- ===== Exercise 2 ===== -->
+            <div class="exercise-section">
+                <div class="exercise-title">Exercise 2</div>
+                <div class="exercise-instruction">
+                    Look at the six charts below (numbered 1–6). Identify the type of each chart.
+                    Write the letter of the correct type in each box.
+                    <div style="margin-top: var(--space-sm); font-size: 0.82rem; color: var(--text-light);">
+                        Types: &nbsp;
+                        <strong>A.</strong> bar chart &nbsp;
+                        <strong>B.</strong> table &nbsp;
+                        <strong>C.</strong> pie chart &nbsp;
+                        <strong>D.</strong> map &nbsp;
+                        <strong>E.</strong> diagram &nbsp;
+                        <strong>F.</strong> graph
+                    </div>
+                </div>
+
+                <div class="chart-image-container">
+                    <img src="images/t1-13-ex2-charts.png" alt="Six chart types for identification">
+                </div>
+
+                <div class="chart-answers-grid">
+                    <div class="chart-answer-row">
+                        <span class="chart-num">1</span>
+                        <span style="color:var(--text-light); font-size:0.88rem;">→</span>
+                        <select class="matching-select" id="ex2_1" data-answer="A">
+                            <option value="">—</option>
+                            <option value="A">A. bar chart</option>
+                            <option value="B">B. table</option>
+                            <option value="C">C. pie chart</option>
+                            <option value="D">D. map</option>
+                            <option value="E">E. diagram</option>
+                            <option value="F">F. graph</option>
+                        </select>
+                    </div>
+                    <div class="chart-answer-row">
+                        <span class="chart-num">2</span>
+                        <span style="color:var(--text-light); font-size:0.88rem;">→</span>
+                        <select class="matching-select" id="ex2_2" data-answer="B">
+                            <option value="">—</option>
+                            <option value="A">A. bar chart</option>
+                            <option value="B">B. table</option>
+                            <option value="C">C. pie chart</option>
+                            <option value="D">D. map</option>
+                            <option value="E">E. diagram</option>
+                            <option value="F">F. graph</option>
+                        </select>
+                    </div>
+                    <div class="chart-answer-row">
+                        <span class="chart-num">3</span>
+                        <span style="color:var(--text-light); font-size:0.88rem;">→</span>
+                        <select class="matching-select" id="ex2_3" data-answer="C">
+                            <option value="">—</option>
+                            <option value="A">A. bar chart</option>
+                            <option value="B">B. table</option>
+                            <option value="C">C. pie chart</option>
+                            <option value="D">D. map</option>
+                            <option value="E">E. diagram</option>
+                            <option value="F">F. graph</option>
+                        </select>
+                    </div>
+                    <div class="chart-answer-row">
+                        <span class="chart-num">4</span>
+                        <span style="color:var(--text-light); font-size:0.88rem;">→</span>
+                        <select class="matching-select" id="ex2_4" data-answer="D">
+                            <option value="">—</option>
+                            <option value="A">A. bar chart</option>
+                            <option value="B">B. table</option>
+                            <option value="C">C. pie chart</option>
+                            <option value="D">D. map</option>
+                            <option value="E">E. diagram</option>
+                            <option value="F">F. graph</option>
+                        </select>
+                    </div>
+                    <div class="chart-answer-row">
+                        <span class="chart-num">5</span>
+                        <span style="color:var(--text-light); font-size:0.88rem;">→</span>
+                        <select class="matching-select" id="ex2_5" data-answer="E">
+                            <option value="">—</option>
+                            <option value="A">A. bar chart</option>
+                            <option value="B">B. table</option>
+                            <option value="C">C. pie chart</option>
+                            <option value="D">D. map</option>
+                            <option value="E">E. diagram</option>
+                            <option value="F">F. graph</option>
+                        </select>
+                    </div>
+                    <div class="chart-answer-row">
+                        <span class="chart-num">6</span>
+                        <span style="color:var(--text-light); font-size:0.88rem;">→</span>
+                        <select class="matching-select" id="ex2_6" data-answer="F">
+                            <option value="">—</option>
+                            <option value="A">A. bar chart</option>
+                            <option value="B">B. table</option>
+                            <option value="C">C. pie chart</option>
+                            <option value="D">D. map</option>
+                            <option value="E">E. diagram</option>
+                            <option value="F">F. graph</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="answer-explanation" id="exp_ex2" style="margin-top: var(--space-lg);">
+                    <strong>Answers:</strong>
+                    1 → <span class="correct-answer">A (bar chart)</span> &nbsp;
+                    2 → <span class="correct-answer">B (table)</span> &nbsp;
+                    3 → <span class="correct-answer">C (pie chart)</span> &nbsp;
+                    4 → <span class="correct-answer">D (map)</span> &nbsp;
+                    5 → <span class="correct-answer">E (diagram)</span> &nbsp;
+                    6 → <span class="correct-answer">F (graph)</span>
+                </div>
+            </div>
+
+            <!-- ===== Exercise 3 ===== -->
+            <div class="exercise-section">
+                <div class="exercise-title">Exercise 3</div>
+                <div class="exercise-instruction">
+                    Read each task description and look at the visual. Identify the type of information shown.
+                    Write the letter of the correct type in the box.
+                    <div style="margin-top: var(--space-sm); font-size: 0.82rem; color: var(--text-light);">
+                        Types: &nbsp;
+                        <strong>A.</strong> bar chart &nbsp;
+                        <strong>B.</strong> table &nbsp;
+                        <strong>C.</strong> pie chart &nbsp;
+                        <strong>D.</strong> map &nbsp;
+                        <strong>E.</strong> diagram &nbsp;
+                        <strong>F.</strong> graph
+                    </div>
+                </div>
+
+                <!-- Item 1 -->
+                <div class="ex3-item">
+                    <div class="ex3-item-body">
+                        <div class="ex3-text-side">
+                            <div class="ex3-item-number">Question 1</div>
+                            <div class="ex3-item-desc">
+                                The proportion of different categories of families living in poverty in Australia in 1999.
+                            </div>
+                            <div class="ex3-answer-row">
+                                <span class="ex3-answer-label">Type:</span>
+                                <select class="matching-select" id="ex3_1" data-answer="B">
+                                    <option value="">— Select type —</option>
+                                    <option value="A">A. bar chart</option>
+                                    <option value="B">B. table</option>
+                                    <option value="C">C. pie chart</option>
+                                    <option value="D">D. map</option>
+                                    <option value="E">E. diagram</option>
+                                    <option value="F">F. graph</option>
+                                </select>
+                            </div>
+                            <div class="answer-explanation" id="exp3_1">
+                                Answer: <span class="correct-answer">B. table</span> — The data is presented in rows and columns showing family types and their poverty proportions.
+                            </div>
+                        </div>
+                        <div class="ex3-image-side">
+                            <img src="images/t1-13-ex3-1.png" alt="Task 1 sample — table">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="ex3-item">
+                    <div class="ex3-item-body">
+                        <div class="ex3-text-side">
+                            <div class="ex3-item-number">Question 2</div>
+                            <div class="ex3-item-desc">
+                                The different levels of post-school qualifications in Australia and the proportion of men and women who held them in 1999.
+                            </div>
+                            <div class="ex3-answer-row">
+                                <span class="ex3-answer-label">Type:</span>
+                                <select class="matching-select" id="ex3_2" data-answer="A">
+                                    <option value="">— Select type —</option>
+                                    <option value="A">A. bar chart</option>
+                                    <option value="B">B. table</option>
+                                    <option value="C">C. pie chart</option>
+                                    <option value="D">D. map</option>
+                                    <option value="E">E. diagram</option>
+                                    <option value="F">F. graph</option>
+                                </select>
+                            </div>
+                            <div class="answer-explanation" id="exp3_2">
+                                Answer: <span class="correct-answer">A. bar chart</span> — The visual uses horizontal bars to compare male and female qualification levels.
+                            </div>
+                        </div>
+                        <div class="ex3-image-side">
+                            <img src="images/t1-13-ex3-2.png" alt="Task 1 sample — bar chart">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="ex3-item">
+                    <div class="ex3-item-body">
+                        <div class="ex3-text-side">
+                            <div class="ex3-item-number">Question 3</div>
+                            <div class="ex3-item-desc">
+                                The proportion of the population aged 65 and over between 1940 and 2040 in three different countries.
+                            </div>
+                            <div class="ex3-answer-row">
+                                <span class="ex3-answer-label">Type:</span>
+                                <select class="matching-select" id="ex3_3" data-answer="F">
+                                    <option value="">— Select type —</option>
+                                    <option value="A">A. bar chart</option>
+                                    <option value="B">B. table</option>
+                                    <option value="C">C. pie chart</option>
+                                    <option value="D">D. map</option>
+                                    <option value="E">E. diagram</option>
+                                    <option value="F">F. graph</option>
+                                </select>
+                            </div>
+                            <div class="answer-explanation" id="exp3_3">
+                                Answer: <span class="correct-answer">F. graph</span> — The visual shows three line curves plotted over time (1940–2040), which is a line graph.
+                            </div>
+                        </div>
+                        <div class="ex3-image-side">
+                            <img src="images/t1-13-ex3-3.png" alt="Task 1 sample — graph">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="ex3-item">
+                    <div class="ex3-item-body">
+                        <div class="ex3-text-side">
+                            <div class="ex3-item-number">Question 4</div>
+                            <div class="ex3-item-desc">
+                                A new supermarket (S) is planned for the town and there are two possible sites for the supermarket.
+                            </div>
+                            <div class="ex3-answer-row">
+                                <span class="ex3-answer-label">Type:</span>
+                                <select class="matching-select" id="ex3_4" data-answer="D">
+                                    <option value="">— Select type —</option>
+                                    <option value="A">A. bar chart</option>
+                                    <option value="B">B. table</option>
+                                    <option value="C">C. pie chart</option>
+                                    <option value="D">D. map</option>
+                                    <option value="E">E. diagram</option>
+                                    <option value="F">F. graph</option>
+                                </select>
+                            </div>
+                            <div class="answer-explanation" id="exp3_4">
+                                Answer: <span class="correct-answer">D. map</span> — The visual shows a town layout with roads, buildings and possible sites for the supermarket.
+                            </div>
+                        </div>
+                        <div class="ex3-image-side">
+                            <img src="images/t1-13-ex3-4.png" alt="Task 1 sample — map">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 5 -->
+                <div class="ex3-item">
+                    <div class="ex3-item-body">
+                        <div class="ex3-text-side">
+                            <div class="ex3-item-number">Question 5</div>
+                            <div class="ex3-item-desc">
+                                Information about water use worldwide and water consumption in two different countries.
+                            </div>
+                            <div class="ex3-answer-row">
+                                <span class="ex3-answer-label">Type:</span>
+                                <select class="matching-select" id="ex3_5" data-answer="F+B">
+                                    <option value="">— Select type —</option>
+                                    <option value="A">A. bar chart</option>
+                                    <option value="B">B. table</option>
+                                    <option value="C">C. pie chart</option>
+                                    <option value="D">D. map</option>
+                                    <option value="E">E. diagram</option>
+                                    <option value="F">F. graph</option>
+                                    <option value="F+B">F + B (graph + table)</option>
+                                </select>
+                            </div>
+                            <div class="answer-explanation" id="exp3_5">
+                                Answer: <span class="correct-answer">F + B (graph + table)</span> — This question combines a line graph (global water use trends) and a table (water consumption in Brazil and Congo). Task 1 sometimes uses two visuals together.
+                            </div>
+                        </div>
+                        <div class="ex3-image-side">
+                            <img src="images/t1-13-ex3-5.png" alt="Task 1 sample — graph + table">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 6 -->
+                <div class="ex3-item">
+                    <div class="ex3-item-body">
+                        <div class="ex3-text-side">
+                            <div class="ex3-item-number">Question 6</div>
+                            <div class="ex3-item-desc">
+                                The life cycle of the silkworm and the stages in the production of silk cloth.
+                            </div>
+                            <div class="ex3-answer-row">
+                                <span class="ex3-answer-label">Type:</span>
+                                <select class="matching-select" id="ex3_6" data-answer="E">
+                                    <option value="">— Select type —</option>
+                                    <option value="A">A. bar chart</option>
+                                    <option value="B">B. table</option>
+                                    <option value="C">C. pie chart</option>
+                                    <option value="D">D. map</option>
+                                    <option value="E">E. diagram</option>
+                                    <option value="F">F. graph</option>
+                                </select>
+                            </div>
+                            <div class="answer-explanation" id="exp3_6">
+                                Answer: <span class="correct-answer">E. diagram</span> — The visual shows a process / cycle diagram illustrating stages rather than numerical data.
+                            </div>
+                        </div>
+                        <div class="ex3-image-side">
+                            <img src="images/t1-13-ex3-6.jpg" alt="Task 1 sample — diagram">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 7 -->
+                <div class="ex3-item">
+                    <div class="ex3-item-body">
+                        <div class="ex3-text-side">
+                            <div class="ex3-item-number">Question 7</div>
+                            <div class="ex3-item-desc">
+                                Units of electricity production by fuel source in Australia and France in 1980 and 2000.
+                            </div>
+                            <div class="ex3-answer-row">
+                                <span class="ex3-answer-label">Type:</span>
+                                <select class="matching-select" id="ex3_7" data-answer="C">
+                                    <option value="">— Select type —</option>
+                                    <option value="A">A. bar chart</option>
+                                    <option value="B">B. table</option>
+                                    <option value="C">C. pie chart</option>
+                                    <option value="D">D. map</option>
+                                    <option value="E">E. diagram</option>
+                                    <option value="F">F. graph</option>
+                                </select>
+                            </div>
+                            <div class="answer-explanation" id="exp3_7">
+                                Answer: <span class="correct-answer">C. pie chart</span> — The visuals show four pie charts comparing fuel source proportions in Australia and France across two years.
+                            </div>
+                        </div>
+                        <div class="ex3-image-side">
+                            <img src="images/t1-13-ex3-7.png" alt="Task 1 sample — pie chart">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end exercise 3 -->
+
+            <!-- ===== Action bar (shared for all exercises) ===== -->
+            <div class="action-bar">
+                <button class="btn-check" onclick="checkAllAnswers()">✓ Check Answers</button>
+                <button class="btn-reset" onclick="resetAllAnswers()">↺ Reset</button>
+            </div>
+            <div class="result-feedback" id="resultFeedback"></div>
+
+            <!-- ===== Lesson navigation ===== -->
+            <div class="lesson-nav">
+                <a href="lesson-writing-t1-1-2.html" class="lesson-nav-btn">‹ 1.2 Understanding the Task Instruction</a>
+                <a href="lesson.html?module=writing-t1&id=1-4" class="lesson-nav-btn primary">Next: 1.4 Identifying Relevant Information ›</a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="background: var(--primary-dark); color: rgba(255,255,255,0.55); padding: var(--space-xl) 0; font-size: 0.8rem; text-align: center;">
+        PathFinder · IELTS Learning Protocol
+    </footer>
+
+    <script>
+        function checkAllAnswers() {
+            let correct = 0;
+            let total = 0;
+
+            document.querySelectorAll('.matching-select').forEach(function(sel) {
+                total++;
+                const user = sel.value;
+                const right = sel.dataset.answer;
+                sel.classList.remove('correct', 'incorrect', 'unchecked');
+
+                if (!user) {
+                    sel.classList.add('unchecked');
+                } else if (user === right) {
+                    sel.classList.add('correct');
+                    correct++;
+                } else {
+                    sel.classList.add('incorrect');
+                }
+            });
+
+            // Show all answer explanations
+            document.querySelectorAll('.answer-explanation').forEach(function(el) {
+                el.classList.add('show');
+            });
+
+            // Feedback
+            const fb = document.getElementById('resultFeedback');
+            const pct = Math.round((correct / total) * 100);
+            if (correct === total) {
+                fb.className = 'result-feedback show success';
+                fb.innerHTML = '🎉 Excellent! All ' + total + ' questions correct!';
+            } else if (pct >= 60) {
+                fb.className = 'result-feedback show partial';
+                fb.innerHTML = '👍 Good job! ' + correct + ' / ' + total + ' correct (' + pct + '%). Review the highlighted answers.';
+            } else {
+                fb.className = 'result-feedback show partial';
+                fb.innerHTML = '💪 Keep going! ' + correct + ' / ' + total + ' correct (' + pct + '%). Check the answers and try again.';
+            }
+            fb.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function resetAllAnswers() {
+            document.querySelectorAll('.matching-select').forEach(function(sel) {
+                sel.value = '';
+                sel.classList.remove('correct', 'incorrect', 'unchecked');
+            });
+            document.querySelectorAll('.answer-explanation').forEach(function(el) {
+                el.classList.remove('show');
+            });
+            const fb = document.getElementById('resultFeedback');
+            fb.className = 'result-feedback';
+        }
+    </script>
+
+</body>
+</html>
