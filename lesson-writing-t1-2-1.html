@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2.1 Activity 1 — PathFinder Writing Task 1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* ===== 课时页通用 ===== */
+        .lesson-hero {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1a252f 100%);
+            color: white;
+            padding: var(--space-xl) 0;
+        }
+        .lesson-hero-inner {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xl);
+        }
+        .lesson-badge {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-red);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+            line-height: 1.2;
+            text-align: center;
+        }
+        .lesson-hero-info h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            margin-bottom: var(--space-xs);
+        }
+        .lesson-hero-info p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            line-height: 1.7;
+        }
+        .lesson-content {
+            padding: var(--space-2xl) 0;
+            max-width: 820px;
+            margin: 0 auto;
+        }
+
+        /* ===== Section 标题 ===== */
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            color: var(--primary-dark);
+            border-left: 4px solid var(--primary-red);
+            padding-left: var(--space-md);
+            margin-bottom: var(--space-lg);
+            margin-top: var(--space-2xl);
+        }
+        .section-title:first-child { margin-top: 0; }
+
+        /* ===== Read the Task 题目框 ===== */
+        .task-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: var(--space-xl);
+        }
+        .task-card-instruction {
+            background: var(--bg-cream);
+            padding: var(--space-lg) var(--space-xl);
+            font-size: 0.9rem;
+            color: var(--text-body);
+            line-height: 1.7;
+            border-bottom: 1px solid var(--border-soft);
+        }
+        .task-card-instruction p { margin-bottom: var(--space-sm); }
+        .task-card-instruction p:last-child { margin-bottom: 0; }
+        .task-card img {
+            width: 100%;
+            display: block;
+        }
+
+        /* ===== 选择题 ===== */
+        .quiz-block {
+            background: var(--bg-white);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            margin-bottom: var(--space-md);
+        }
+        .quiz-question {
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: var(--space-md);
+            line-height: 1.6;
+        }
+        .quiz-question .q-num {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            background: var(--primary-red);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            font-size: 0.82rem;
+            font-family: 'Playfair Display', serif;
+            margin-right: var(--space-sm);
+            flex-shrink: 0;
+        }
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+        .quiz-option {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-sm);
+            padding: var(--space-sm) var(--space-md);
+            border: 1.5px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--text-body);
+        }
+        .quiz-option:hover {
+            border-color: var(--primary-red);
+            background: rgba(139,0,0,0.03);
+        }
+        .quiz-option.selected {
+            border-color: var(--primary-dark);
+            background: rgba(44,62,80,0.06);
+        }
+        .quiz-option .opt-letter {
+            font-weight: 700;
+            color: var(--primary-red);
+            min-width: 18px;
+            flex-shrink: 0;
+        }
+        /* 检查答案后样式 */
+        .quiz-option.correct-pick {
+            border-color: #27ae60;
+            background: rgba(39,174,96,0.08);
+            color: #1a6b3a;
+        }
+        .quiz-option.wrong-pick {
+            border-color: #c0392b;
+            background: rgba(192,57,43,0.07);
+            color: #8b2017;
+        }
+        .quiz-option.show-correct {
+            border-color: #27ae60;
+            background: rgba(39,174,96,0.06);
+        }
+
+        /* ===== Check Answers 按钮区 ===== */
+        .check-btn-wrap {
+            margin: var(--space-xl) 0 var(--space-sm);
+            display: flex;
+            gap: var(--space-md);
+            align-items: center;
+        }
+        .btn-check {
+            padding: var(--space-sm) var(--space-xl);
+            background: var(--primary-red);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-check:hover { background: #6b0000; }
+        .btn-reset {
+            padding: var(--space-sm) var(--space-xl);
+            background: transparent;
+            color: var(--text-light);
+            border: 1.5px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-reset:hover {
+            border-color: var(--primary-dark);
+            color: var(--primary-dark);
+        }
+        .score-msg {
+            font-size: 0.88rem;
+            color: var(--text-light);
+        }
+
+        /* ===== Have a Think 思考题 ===== */
+        .think-card {
+            margin-top: var(--space-2xl);
+            background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl) var(--space-2xl);
+            color: white;
+        }
+        .think-label {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #f0c060;
+            margin-bottom: var(--space-md);
+        }
+        .think-label::before {
+            content: "💭";
+            font-size: 1.2rem;
+        }
+        .think-question {
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: var(--space-md);
+        }
+        .think-quote {
+            background: rgba(255,255,255,0.1);
+            border-left: 3px solid #f0c060;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: var(--space-md) var(--space-lg);
+            font-style: italic;
+            font-size: 0.95rem;
+            color: #f8f4ea;
+            margin-bottom: var(--space-md);
+        }
+        .think-hint {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            line-height: 1.6;
+        }
+
+        /* ===== 导航按钮 ===== */
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: var(--space-2xl);
+            padding-top: var(--space-xl);
+            border-top: 1px solid var(--border-soft);
+        }
+        .btn-nav {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-sm) var(--space-xl);
+            border: 1.5px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.88rem;
+            transition: all 0.2s;
+        }
+        .btn-nav:hover {
+            border-color: var(--primary-red);
+            color: var(--primary-red);
+        }
+        .btn-nav.next {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+            color: white;
+        }
+        .btn-nav.next:hover {
+            background: var(--primary-red);
+            border-color: var(--primary-red);
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">PF</div>
+                    <div class="logo-text">PathFinder<span>IELTS Learning Protocol</span></div>
+                </a>
+                <nav class="nav">
+                    <a href="index.html" class="nav-item">Modules</a>
+                    <a href="#" class="nav-item">My Progress</a>
+                    <a href="#" class="nav-item">Practice</a>
+                    <a href="#" class="nav-item">AI Assistant</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- 面包屑 -->
+    <div class="container">
+        <div class="breadcrumb" style="padding-top: var(--space-lg);">
+            <a href="index.html">Home</a>
+            <span class="breadcrumb-sep">›</span>
+            <a href="module-writing.html">Writing</a>
+            <span class="breadcrumb-sep">›</span>
+            <a href="writing-task1.html?chapter=2">Task 1 — Chapter 2</a>
+            <span class="breadcrumb-sep">›</span>
+            <span>2.1 Activity 1</span>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="lesson-hero">
+        <div class="container">
+            <div class="lesson-hero-inner">
+                <div class="lesson-badge">2.1</div>
+                <div class="lesson-hero-info">
+                    <h1>Activity 1</h1>
+                    <p>Chapter 2 — Understanding the Four-Part Structure</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 课时内容 -->
+    <div class="container">
+        <div class="lesson-content">
+
+            <!-- Read the Task -->
+            <h2 class="section-title">Read the Task</h2>
+
+            <p style="line-height:1.8; color:var(--text-body); margin-bottom:var(--space-lg); font-size:0.93rem;">
+                Look at the IELTS Task 1 question carefully. Then answer the questions below to identify the basic information in the task. These details will help you understand what the report should be about.
+            </p>
+
+            <div class="task-card">
+                <div class="task-card-instruction">
+                    <p><strong>WRITING TASK 1</strong></p>
+                    <p>You should spend about 20 minutes on this task.</p>
+                    <p><em><strong>The table below shows the proportion of different categories of families living in poverty in Australia in 1999.</strong></em></p>
+                    <p><em><strong>Summarise the information by selecting and reporting the main features, and make comparisons where relevant.</strong></em></p>
+                    <p>Write at least 150 words.</p>
+                </div>
+                <img src="images/t1-21-task.jpg" alt="IELTS Task 1 — Table showing proportion of families living in poverty in Australia 1999">
+            </div>
+
+            <!-- Questions 1–7 -->
+            <h2 class="section-title">Questions</h2>
+
+            <!-- Q1 -->
+            <div class="quiz-block" id="qb1">
+                <div class="quiz-question">
+                    <span class="q-num">1</span>
+                    What type of visual is used in this task?
+                </div>
+                <div class="quiz-options" id="opts1">
+                    <div class="quiz-option" data-q="1" data-val="A" onclick="selectOption(this)"><span class="opt-letter">A.</span> A line graph</div>
+                    <div class="quiz-option" data-q="1" data-val="B" onclick="selectOption(this)"><span class="opt-letter">B.</span> A bar chart</div>
+                    <div class="quiz-option" data-q="1" data-val="C" onclick="selectOption(this)"><span class="opt-letter">C.</span> A table</div>
+                    <div class="quiz-option" data-q="1" data-val="D" onclick="selectOption(this)"><span class="opt-letter">D.</span> A pie chart</div>
+                </div>
+            </div>
+
+            <!-- Q2 -->
+            <div class="quiz-block" id="qb2">
+                <div class="quiz-question">
+                    <span class="q-num">2</span>
+                    Which country is the information about?
+                </div>
+                <div class="quiz-options" id="opts2">
+                    <div class="quiz-option" data-q="2" data-val="A" onclick="selectOption(this)"><span class="opt-letter">A.</span> Australia</div>
+                    <div class="quiz-option" data-q="2" data-val="B" onclick="selectOption(this)"><span class="opt-letter">B.</span> The United Kingdom</div>
+                    <div class="quiz-option" data-q="2" data-val="C" onclick="selectOption(this)"><span class="opt-letter">C.</span> Canada</div>
+                    <div class="quiz-option" data-q="2" data-val="D" onclick="selectOption(this)"><span class="opt-letter">D.</span> New Zealand</div>
+                </div>
+            </div>
+
+            <!-- Q3 -->
+            <div class="quiz-block" id="qb3">
+                <div class="quiz-question">
+                    <span class="q-num">3</span>
+                    What is the time period?
+                </div>
+                <div class="quiz-options" id="opts3">
+                    <div class="quiz-option" data-q="3" data-val="A" onclick="selectOption(this)"><span class="opt-letter">A.</span> 1989</div>
+                    <div class="quiz-option" data-q="3" data-val="B" onclick="selectOption(this)"><span class="opt-letter">B.</span> 1999</div>
+                    <div class="quiz-option" data-q="3" data-val="C" onclick="selectOption(this)"><span class="opt-letter">C.</span> 2009</div>
+                    <div class="quiz-option" data-q="3" data-val="D" onclick="selectOption(this)"><span class="opt-letter">D.</span> 2019</div>
+                </div>
+            </div>
+
+            <!-- Q4 -->
+            <div class="quiz-block" id="qb4">
+                <div class="quiz-question">
+                    <span class="q-num">4</span>
+                    What unit is mainly used in the table?
+                </div>
+                <div class="quiz-options" id="opts4">
+                    <div class="quiz-option" data-q="4" data-val="A" onclick="selectOption(this)"><span class="opt-letter">A.</span> Dollars</div>
+                    <div class="quiz-option" data-q="4" data-val="B" onclick="selectOption(this)"><span class="opt-letter">B.</span> Percentages</div>
+                    <div class="quiz-option" data-q="4" data-val="C" onclick="selectOption(this)"><span class="opt-letter">C.</span> Kilometres</div>
+                    <div class="quiz-option" data-q="4" data-val="D" onclick="selectOption(this)"><span class="opt-letter">D.</span> Hours</div>
+                </div>
+            </div>
+
+            <!-- Q5 -->
+            <div class="quiz-block" id="qb5">
+                <div class="quiz-question">
+                    <span class="q-num">5</span>
+                    What kinds of groups are compared in the table?
+                </div>
+                <div class="quiz-options" id="opts5">
+                    <div class="quiz-option" data-q="5" data-val="A" onclick="selectOption(this)"><span class="opt-letter">A.</span> Different age groups</div>
+                    <div class="quiz-option" data-q="5" data-val="B" onclick="selectOption(this)"><span class="opt-letter">B.</span> Different income groups</div>
+                    <div class="quiz-option" data-q="5" data-val="C" onclick="selectOption(this)"><span class="opt-letter">C.</span> Different family or household types</div>
+                    <div class="quiz-option" data-q="5" data-val="D" onclick="selectOption(this)"><span class="opt-letter">D.</span> Different Australian cities</div>
+                </div>
+            </div>
+
+            <!-- Q6 -->
+            <div class="quiz-block" id="qb6">
+                <div class="quiz-question">
+                    <span class="q-num">6</span>
+                    What does the table show?
+                </div>
+                <div class="quiz-options" id="opts6">
+                    <div class="quiz-option" data-q="6" data-val="A" onclick="selectOption(this)"><span class="opt-letter">A.</span> The number of poor families in different countries</div>
+                    <div class="quiz-option" data-q="6" data-val="B" onclick="selectOption(this)"><span class="opt-letter">B.</span> The proportion of different family types living in poverty in Australia</div>
+                    <div class="quiz-option" data-q="6" data-val="C" onclick="selectOption(this)"><span class="opt-letter">C.</span> The income of different household types in Australia</div>
+                    <div class="quiz-option" data-q="6" data-val="D" onclick="selectOption(this)"><span class="opt-letter">D.</span> The percentage of children living in poverty in Australia</div>
+                </div>
+            </div>
+
+            <!-- Q7 -->
+            <div class="quiz-block" id="qb7">
+                <div class="quiz-question">
+                    <span class="q-num">7</span>
+                    Which sentence below best summarises the task?
+                </div>
+                <div class="quiz-options" id="opts7">
+                    <div class="quiz-option" data-q="7" data-val="A" onclick="selectOption(this)"><span class="opt-letter">A.</span> The table shows poverty in Australia.</div>
+                    <div class="quiz-option" data-q="7" data-val="B" onclick="selectOption(this)"><span class="opt-letter">B.</span> The table shows the proportion of people from different household types living in poverty in Australia in 1999.</div>
+                    <div class="quiz-option" data-q="7" data-val="C" onclick="selectOption(this)"><span class="opt-letter">C.</span> The table compares poor people and rich people in Australia in 1999.</div>
+                    <div class="quiz-option" data-q="7" data-val="D" onclick="selectOption(this)"><span class="opt-letter">D.</span> The table shows the number of families in Australia.</div>
+                </div>
+            </div>
+
+            <!-- Check Answers -->
+            <div class="check-btn-wrap">
+                <button class="btn-check" onclick="checkAnswers()">Check Answers</button>
+                <button class="btn-reset" onclick="resetAll()">Reset</button>
+                <span class="score-msg" id="scoreMsg"></span>
+            </div>
+
+            <!-- Have a Think -->
+            <div class="think-card">
+                <div class="think-label">Have a Think</div>
+                <p class="think-question">Where do you think this sentence should appear in a Task 1 report?</p>
+                <div class="think-quote">
+                    "The table shows the proportion of people from different household types living in poverty in Australia in 1999."
+                </div>
+                <p class="think-hint">Keep this question in mind. You will discover the answer in the next activity.</p>
+            </div>
+
+            <!-- 底部导航 -->
+            <div class="lesson-nav">
+                <a href="writing-task1.html?chapter=2" class="btn-nav">← Back to Chapter 2</a>
+                <a href="lesson.html" class="btn-nav next">Next Activity →</a>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">PathFinder</div>
+            <p class="footer-text">IELTS Learning Protocol</p>
+        </div>
+    </footer>
+
+    <script>
+        // 正确答案
+        var answers = { 1: 'C', 2: 'A', 3: 'B', 4: 'B', 5: 'C', 6: 'B', 7: 'B' };
+        // 已选答案
+        var selected = {};
+        var checked = false;
+
+        function selectOption(el) {
+            if (checked) return;
+            var q = parseInt(el.getAttribute('data-q'));
+            var val = el.getAttribute('data-val');
+            // 取消同题其他选中
+            var siblings = document.querySelectorAll('[data-q="' + q + '"]');
+            siblings.forEach(function(s) { s.classList.remove('selected'); });
+            el.classList.add('selected');
+            selected[q] = val;
+        }
+
+        function checkAnswers() {
+            var total = Object.keys(answers).length;
+            var correct = 0;
+            for (var q = 1; q <= total; q++) {
+                var opts = document.querySelectorAll('[data-q="' + q + '"]');
+                opts.forEach(function(opt) {
+                    var val = opt.getAttribute('data-val');
+                    var isAnswer = val === answers[q];
+                    var isPicked = selected[q] === val;
+                    opt.classList.remove('selected');
+                    if (isPicked && isAnswer) {
+                        opt.classList.add('correct-pick');
+                        correct++;
+                    } else if (isPicked && !isAnswer) {
+                        opt.classList.add('wrong-pick');
+                    } else if (!isPicked && isAnswer) {
+                        opt.classList.add('show-correct');
+                    }
+                });
+            }
+            checked = true;
+            var msg = document.getElementById('scoreMsg');
+            msg.textContent = 'Score: ' + correct + ' / ' + total;
+            if (correct === total) {
+                msg.style.color = '#27ae60';
+                msg.textContent += ' — Excellent!';
+            } else if (correct >= total - 1) {
+                msg.style.color = '#27ae60';
+                msg.textContent += ' — Well done!';
+            } else {
+                msg.style.color = 'var(--text-light)';
+            }
+        }
+
+        function resetAll() {
+            checked = false;
+            selected = {};
+            document.querySelectorAll('.quiz-option').forEach(function(opt) {
+                opt.classList.remove('selected', 'correct-pick', 'wrong-pick', 'show-correct');
+            });
+            var msg = document.getElementById('scoreMsg');
+            msg.textContent = '';
+        }
+    </script>
+
+</body>
+</html>
