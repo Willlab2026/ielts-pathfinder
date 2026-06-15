@@ -200,6 +200,198 @@
             color: var(--text-light);
         }
 
+        /* ===== Sample Report 练习区 ===== */
+        .sample-section-intro {
+            line-height: 1.8;
+            color: var(--text-body);
+            font-size: 0.93rem;
+            margin-bottom: var(--space-xl);
+        }
+
+        /* 拖拽选项区 */
+        .drag-options-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+            background: var(--bg-cream);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            padding: var(--space-md) var(--space-lg);
+            margin-bottom: var(--space-xl);
+        }
+        .drag-options-bank p {
+            width: 100%;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: var(--space-xs);
+        }
+        .drag-chip {
+            padding: 6px 14px;
+            background: white;
+            border: 1.5px solid var(--primary-dark);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            cursor: grab;
+            transition: all 0.15s;
+            white-space: nowrap;
+        }
+        .drag-chip:hover {
+            background: var(--primary-dark);
+            color: white;
+        }
+        .drag-chip.dragging {
+            opacity: 0.4;
+            cursor: grabbing;
+        }
+        .drag-chip.used {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        /* 段落 + 放置框 */
+        .sample-paragraph-wrap {
+            margin-bottom: var(--space-xl);
+        }
+        .para-drop-zone {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-sm);
+        }
+        .para-label {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            white-space: nowrap;
+        }
+        .drop-box {
+            min-width: 260px;
+            min-height: 36px;
+            border: 2px dashed #aab4bc;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.82rem;
+            color: #aab4bc;
+            transition: all 0.2s;
+            padding: 4px 14px;
+            position: relative;
+        }
+        .drop-box.drag-over {
+            border-color: var(--primary-red);
+            background: rgba(139,0,0,0.04);
+            color: var(--primary-red);
+        }
+        .drop-box.filled {
+            border-style: solid;
+            border-color: var(--primary-dark);
+            background: var(--primary-dark);
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .drop-box.filled:hover::after {
+            content: "✕";
+            position: absolute;
+            right: 12px;
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
+        .drop-box.correct-drop {
+            border-color: #27ae60 !important;
+            background: #27ae60 !important;
+        }
+        .drop-box.wrong-drop {
+            border-color: #c0392b !important;
+            background: #c0392b !important;
+        }
+
+        /* 段落文字 */
+        .sample-para-text {
+            background: var(--bg-white);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            padding: var(--space-lg) var(--space-xl);
+            line-height: 1.9;
+            font-size: 0.92rem;
+            color: var(--text-body);
+        }
+
+        /* ===== Exercise 2: 配对表格 ===== */
+        .matching-table-wrap {
+            background: var(--bg-white);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: var(--space-xl);
+        }
+        .matching-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .matching-table th {
+            background: var(--primary-dark);
+            color: white;
+            padding: var(--space-md) var(--space-lg);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: left;
+            letter-spacing: 0.03em;
+        }
+        .matching-table td {
+            padding: var(--space-md) var(--space-lg);
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--border-soft);
+            vertical-align: middle;
+            line-height: 1.6;
+        }
+        .matching-table tr:last-child td { border-bottom: none; }
+        .matching-table tr:nth-child(even) td { background: var(--bg-cream); }
+        .part-name {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--primary-dark);
+            font-size: 0.95rem;
+        }
+        .matching-select-cell select {
+            padding: 6px 12px;
+            border: 1.5px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            font-size: 0.88rem;
+            color: var(--text-body);
+            background: white;
+            cursor: pointer;
+            min-width: 340px;
+        }
+        .matching-select-cell select:focus {
+            outline: none;
+            border-color: var(--primary-red);
+        }
+
+        /* Check / Reset for ex2 */
+        .check-btn-wrap-ex2 {
+            margin: var(--space-lg) 0 var(--space-sm);
+            display: flex;
+            gap: var(--space-md);
+            align-items: center;
+        }
+        .ex2-result-row td {
+            padding-top: 6px;
+            padding-bottom: 6px;
+            font-size: 0.82rem;
+        }
+        .result-correct { color: #27ae60; font-weight: 600; }
+        .result-wrong { color: #c0392b; font-weight: 600; }
+
         /* ===== Have a Think 思考题 ===== */
         .think-card {
             margin-top: var(--space-2xl);
@@ -454,6 +646,165 @@
                 <span class="score-msg" id="scoreMsg"></span>
             </div>
 
+            <!-- ===================== Exercise 1: Sample Report ===================== -->
+            <h2 class="section-title" style="margin-top: var(--space-2xl);">Exercise 1 — Identify the Purpose of Each Paragraph</h2>
+
+            <p class="sample-section-intro">
+                Read the Task 1 again and the sample report carefully, and then answer the questions that follow. Each paragraph in the report serves a different purpose. Drag the correct label into the box above each paragraph.
+            </p>
+
+            <!-- 选项银行 -->
+            <div class="drag-options-bank" id="optionsBank">
+                <p>Options — drag each label to the correct paragraph:</p>
+                <div class="drag-chip" draggable="true" data-label="A" id="chip_A">A. It summarises the main overall information in the visual.</div>
+                <div class="drag-chip" draggable="true" data-label="B" id="chip_B">B. It gives details about the second main information group.</div>
+                <div class="drag-chip" draggable="true" data-label="C" id="chip_C">C. It tells the reader what the visual is about.</div>
+                <div class="drag-chip" draggable="true" data-label="D" id="chip_D">D. It gives details about the first main information group.</div>
+            </div>
+
+            <!-- Paragraph 1 -->
+            <div class="sample-paragraph-wrap">
+                <div class="para-drop-zone">
+                    <span class="para-label">Paragraph 1</span>
+                    <div class="drop-box" id="drop_p1" data-answer="C" ondragover="allowDrop(event)" ondrop="dropHere(event, 'drop_p1')" onclick="removeFromBox('drop_p1')">
+                        Drop label here
+                    </div>
+                </div>
+                <div class="sample-para-text">
+                    The table shows the proportion of people from different household types living in poverty in Australia in 1999.
+                </div>
+            </div>
+
+            <!-- Paragraph 2 -->
+            <div class="sample-paragraph-wrap">
+                <div class="para-drop-zone">
+                    <span class="para-label">Paragraph 2</span>
+                    <div class="drop-box" id="drop_p2" data-answer="A" ondragover="allowDrop(event)" ondrop="dropHere(event, 'drop_p2')" onclick="removeFromBox('drop_p2')">
+                        Drop label here
+                    </div>
+                </div>
+                <div class="sample-para-text">
+                    The table compares the proportions and numbers of people from different types of households living in poverty in Australia in 1999.
+                    <br><br>
+                    Overall, sole-parent families and single adults without children had the highest poverty rates, both well above the average for all households. By contrast, elderly households were the least likely to be poor. However, couples with children accounted for the largest number of people living in poverty.
+                </div>
+            </div>
+
+            <!-- Paragraph 3 -->
+            <div class="sample-paragraph-wrap">
+                <div class="para-drop-zone">
+                    <span class="para-label">Paragraph 3</span>
+                    <div class="drop-box" id="drop_p3" data-answer="D" ondragover="allowDrop(event)" ondrop="dropHere(event, 'drop_p3')" onclick="removeFromBox('drop_p3')">
+                        Drop label here
+                    </div>
+                </div>
+                <div class="sample-para-text">
+                    Among the household types with above-average poverty rates, sole parents had the highest figure, with 21% living in poverty, equivalent to 232,000 people. Single adults without children also had a high poverty rate, at 19%, and this group included 359,000 poor people. Although the proportion for couples with children was lower, at 12%, it was still slightly above the overall average of 11%. This group represented the largest number of people in poverty, at 933,000.
+                </div>
+            </div>
+
+            <!-- Paragraph 4 -->
+            <div class="sample-paragraph-wrap">
+                <div class="para-drop-zone">
+                    <span class="para-label">Paragraph 4</span>
+                    <div class="drop-box" id="drop_p4" data-answer="B" ondragover="allowDrop(event)" ondrop="dropHere(event, 'drop_p4')" onclick="removeFromBox('drop_p4')">
+                        Drop label here
+                    </div>
+                </div>
+                <div class="sample-para-text">
+                    The remaining household types had poverty rates below the national average. Couples without children recorded a figure of 7%, or 211,000 people. The two elderly groups had the lowest levels of poverty: 6% of single aged people and only 4% of aged couples were poor, representing 54,000 and 48,000 people respectively.
+                </div>
+            </div>
+
+            <!-- Check Answers for Ex1 -->
+            <div class="check-btn-wrap">
+                <button class="btn-check" onclick="checkEx1()">Check Answers</button>
+                <button class="btn-reset" onclick="resetEx1()">Reset</button>
+                <span class="score-msg" id="scoreEx1"></span>
+            </div>
+
+            <!-- ===================== Exercise 2: Matching Table ===================== -->
+            <h2 class="section-title" style="margin-top: var(--space-2xl);">Exercise 2 — Match the Report Parts to Their Functions</h2>
+
+            <p class="sample-section-intro">
+                Match each part of the Task 1 report with its function. Select the correct description from the drop-down menu in each row.
+            </p>
+
+            <div class="matching-table-wrap">
+                <table class="matching-table">
+                    <thead>
+                        <tr>
+                            <th style="width:22%;">Part of Report</th>
+                            <th>Function</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="part-name">Introduction</span></td>
+                            <td class="matching-select-cell">
+                                <select id="mt_intro" data-answer="B">
+                                    <option value="">— Select —</option>
+                                    <option value="A">A. It gives details about the second main information group.</option>
+                                    <option value="B">B. It tells the reader what the visual is about.</option>
+                                    <option value="C">C. It gives details about the first main information group.</option>
+                                    <option value="D">D. It summarises the main overall information in the visual.</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="part-name">Overview</span></td>
+                            <td class="matching-select-cell">
+                                <select id="mt_overview" data-answer="D">
+                                    <option value="">— Select —</option>
+                                    <option value="A">A. It gives details about the second main information group.</option>
+                                    <option value="B">B. It tells the reader what the visual is about.</option>
+                                    <option value="C">C. It gives details about the first main information group.</option>
+                                    <option value="D">D. It summarises the main overall information in the visual.</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="part-name">Body 1</span></td>
+                            <td class="matching-select-cell">
+                                <select id="mt_body1" data-answer="C">
+                                    <option value="">— Select —</option>
+                                    <option value="A">A. It gives details about the second main information group.</option>
+                                    <option value="B">B. It tells the reader what the visual is about.</option>
+                                    <option value="C">C. It gives details about the first main information group.</option>
+                                    <option value="D">D. It summarises the main overall information in the visual.</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="part-name">Body 2</span></td>
+                            <td class="matching-select-cell">
+                                <select id="mt_body2" data-answer="A">
+                                    <option value="">— Select —</option>
+                                    <option value="A">A. It gives details about the second main information group.</option>
+                                    <option value="B">B. It tells the reader what the visual is about.</option>
+                                    <option value="C">C. It gives details about the first main information group.</option>
+                                    <option value="D">D. It summarises the main overall information in the visual.</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="check-btn-wrap-ex2">
+                <button class="btn-check" onclick="checkEx2()">Check Answers</button>
+                <button class="btn-reset" onclick="resetEx2()">Reset</button>
+                <span class="score-msg" id="scoreEx2"></span>
+            </div>
+
+            <!-- ===== result feedback rows (hidden until check) ===== -->
+            <div id="ex2Feedback" style="display:none; margin-bottom: var(--space-xl);">
+                <div style="background:var(--bg-cream); border:1px solid var(--border-soft); border-radius:var(--radius-md); padding:var(--space-lg) var(--space-xl);">
+                    <strong style="display:block; margin-bottom:var(--space-sm); color:var(--primary-dark);">Answer Key:</strong>
+                    <div id="ex2FeedbackContent" style="line-height:2; font-size:0.9rem;"></div>
+                </div>
+            </div>
+
             <!-- Have a Think -->
             <div class="think-card">
                 <div class="think-label">Have a Think</div>
@@ -540,6 +891,187 @@
             });
             var msg = document.getElementById('scoreMsg');
             msg.textContent = '';
+        }
+
+        // ============================================================
+        //  Exercise 1 — Drag & Drop
+        // ============================================================
+        var ex1Checked = false;
+        var draggedChipId = null;
+
+        // --- drag chip from bank ---
+        document.querySelectorAll('.drag-chip').forEach(function(chip) {
+            chip.addEventListener('dragstart', function(e) {
+                if (ex1Checked) { e.preventDefault(); return; }
+                draggedChipId = chip.id;
+                chip.classList.add('dragging');
+                e.dataTransfer.setData('text/plain', chip.dataset.label);
+            });
+            chip.addEventListener('dragend', function() {
+                chip.classList.remove('dragging');
+            });
+        });
+
+        function allowDrop(e) {
+            e.preventDefault();
+        }
+
+        function dropHere(e, boxId) {
+            e.preventDefault();
+            if (ex1Checked) return;
+            var label = e.dataTransfer.getData('text/plain');
+            var chipId = draggedChipId;
+            var box = document.getElementById(boxId);
+
+            // If box already had a chip, return it to bank
+            var prevLabel = box.getAttribute('data-filled');
+            if (prevLabel) {
+                returnChipToBank(prevLabel);
+            }
+
+            // Place new chip
+            box.textContent = getLabelText(label);
+            box.setAttribute('data-filled', label);
+            box.classList.add('filled');
+            box.classList.remove('drag-over');
+
+            // Mark chip as used
+            var chip = document.getElementById(chipId);
+            if (chip) chip.classList.add('used');
+        }
+
+        function getLabelText(label) {
+            var texts = {
+                'A': 'A. It summarises the main overall information in the visual.',
+                'B': 'B. It gives details about the second main information group.',
+                'C': 'C. It tells the reader what the visual is about.',
+                'D': 'D. It gives details about the first main information group.'
+            };
+            return texts[label] || label;
+        }
+
+        function returnChipToBank(label) {
+            var chip = document.getElementById('chip_' + label);
+            if (chip) chip.classList.remove('used');
+        }
+
+        function removeFromBox(boxId) {
+            if (ex1Checked) return;
+            var box = document.getElementById(boxId);
+            var prevLabel = box.getAttribute('data-filled');
+            if (!prevLabel) return;
+            returnChipToBank(prevLabel);
+            box.textContent = 'Drop label here';
+            box.removeAttribute('data-filled');
+            box.classList.remove('filled', 'correct-drop', 'wrong-drop');
+        }
+
+        // Drag-over highlight
+        document.querySelectorAll('.drop-box').forEach(function(box) {
+            box.addEventListener('dragover', function() { box.classList.add('drag-over'); });
+            box.addEventListener('dragleave', function() { box.classList.remove('drag-over'); });
+        });
+
+        function checkEx1() {
+            var boxes = ['drop_p1','drop_p2','drop_p3','drop_p4'];
+            var correct = 0;
+            boxes.forEach(function(id) {
+                var box = document.getElementById(id);
+                var filled = box.getAttribute('data-filled');
+                var answer = box.getAttribute('data-answer');
+                box.classList.remove('correct-drop','wrong-drop');
+                if (!filled) return;
+                if (filled === answer) {
+                    box.classList.add('correct-drop');
+                    correct++;
+                } else {
+                    box.classList.add('wrong-drop');
+                }
+            });
+            ex1Checked = true;
+            var msg = document.getElementById('scoreEx1');
+            msg.textContent = 'Score: ' + correct + ' / 4';
+            msg.style.color = correct === 4 ? '#27ae60' : 'var(--text-light)';
+            if (correct === 4) msg.textContent += ' — Perfect!';
+        }
+
+        function resetEx1() {
+            ex1Checked = false;
+            var boxes = ['drop_p1','drop_p2','drop_p3','drop_p4'];
+            boxes.forEach(function(id) {
+                var box = document.getElementById(id);
+                box.textContent = 'Drop label here';
+                box.removeAttribute('data-filled');
+                box.classList.remove('filled','correct-drop','wrong-drop');
+            });
+            document.querySelectorAll('.drag-chip').forEach(function(c) {
+                c.classList.remove('used');
+            });
+            document.getElementById('scoreEx1').textContent = '';
+        }
+
+        // ============================================================
+        //  Exercise 2 — Matching Selects
+        // ============================================================
+        var ex2Checked = false;
+        var ex2Items = [
+            { id: 'mt_intro',    name: 'Introduction', answer: 'B' },
+            { id: 'mt_overview', name: 'Overview',     answer: 'D' },
+            { id: 'mt_body1',    name: 'Body 1',       answer: 'C' },
+            { id: 'mt_body2',    name: 'Body 2',       answer: 'A' }
+        ];
+        var ex2AnswerTexts = {
+            'A': 'A. It gives details about the second main information group.',
+            'B': 'B. It tells the reader what the visual is about.',
+            'C': 'C. It gives details about the first main information group.',
+            'D': 'D. It summarises the main overall information in the visual.'
+        };
+
+        function checkEx2() {
+            var correct = 0;
+            var fbLines = [];
+            ex2Items.forEach(function(item) {
+                var sel = document.getElementById(item.id);
+                var val = sel.value;
+                // visual feedback on select border
+                sel.style.borderColor = '';
+                sel.style.background = '';
+                sel.style.color = '';
+                if (val === item.answer) {
+                    sel.style.borderColor = '#27ae60';
+                    sel.style.background = 'rgba(39,174,96,0.08)';
+                    correct++;
+                    fbLines.push('<span class="result-correct">✓ ' + item.name + ': ' + ex2AnswerTexts[item.answer] + '</span>');
+                } else {
+                    if (val) {
+                        sel.style.borderColor = '#c0392b';
+                        sel.style.background = 'rgba(192,57,43,0.06)';
+                    }
+                    fbLines.push('<span class="result-wrong">✗ ' + item.name + '</span>: correct answer is <strong>' + ex2AnswerTexts[item.answer] + '</strong>');
+                }
+            });
+            ex2Checked = true;
+            var msg = document.getElementById('scoreEx2');
+            msg.textContent = 'Score: ' + correct + ' / 4';
+            msg.style.color = correct === 4 ? '#27ae60' : 'var(--text-light)';
+            if (correct === 4) msg.textContent += ' — Excellent!';
+
+            var fb = document.getElementById('ex2Feedback');
+            document.getElementById('ex2FeedbackContent').innerHTML = fbLines.join('<br>');
+            fb.style.display = 'block';
+        }
+
+        function resetEx2() {
+            ex2Checked = false;
+            ex2Items.forEach(function(item) {
+                var sel = document.getElementById(item.id);
+                sel.value = '';
+                sel.style.borderColor = '';
+                sel.style.background = '';
+                sel.style.color = '';
+            });
+            document.getElementById('scoreEx2').textContent = '';
+            document.getElementById('ex2Feedback').style.display = 'none';
         }
     </script>
 
