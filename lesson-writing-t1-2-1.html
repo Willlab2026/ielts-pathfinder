@@ -211,8 +211,8 @@
         /* 拖拽选项区 */
         .drag-options-bank {
             display: flex;
-            flex-wrap: wrap;
-            gap: var(--space-sm);
+            flex-direction: column;
+            gap: 6px;
             background: var(--bg-cream);
             border: 1px solid var(--border-soft);
             border-radius: var(--radius-md);
@@ -220,7 +220,6 @@
             margin-bottom: var(--space-xl);
         }
         .drag-options-bank p {
-            width: 100%;
             font-size: 0.82rem;
             font-weight: 600;
             color: var(--text-light);
@@ -229,16 +228,15 @@
             margin-bottom: var(--space-xs);
         }
         .drag-chip {
-            padding: 6px 14px;
+            padding: 8px 16px;
             background: white;
             border: 1.5px solid var(--primary-dark);
-            border-radius: 20px;
+            border-radius: var(--radius-sm);
             font-size: 0.85rem;
             font-weight: 600;
             color: var(--primary-dark);
             cursor: grab;
             transition: all 0.15s;
-            white-space: nowrap;
         }
         .drag-chip:hover {
             background: var(--primary-dark);
@@ -253,16 +251,24 @@
             pointer-events: none;
         }
 
-        /* 段落 + 放置框 */
+        /* 段落 + 放置框：flex行，文字在左，框在右居中 */
         .sample-paragraph-wrap {
-            margin-bottom: var(--space-xl);
-        }
-        .para-drop-zone {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: var(--space-md);
-            margin-bottom: var(--space-sm);
+            gap: var(--space-lg);
+            margin-bottom: var(--space-md);
+        }
+        .para-text-col {
+            flex: 1;
+            min-width: 0;
+        }
+        .para-drop-col {
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            min-width: 200px;
         }
         .para-label {
             font-size: 0.78rem;
@@ -273,7 +279,7 @@
             white-space: nowrap;
         }
         .drop-box {
-            min-width: 260px;
+            min-width: 200px;
             min-height: 36px;
             border: 2px dashed #aab4bc;
             border-radius: 20px;
@@ -283,8 +289,9 @@
             font-size: 0.82rem;
             color: #aab4bc;
             transition: all 0.2s;
-            padding: 4px 14px;
+            padding: 6px 16px;
             position: relative;
+            text-align: center;
         }
         .drop-box.drag-over {
             border-color: var(--primary-red);
@@ -646,6 +653,16 @@
                 <span class="score-msg" id="scoreMsg"></span>
             </div>
 
+            <!-- Have a Think -->
+            <div class="think-card" style="margin-top: var(--space-2xl);">
+                <div class="think-label">Have a Think</div>
+                <p class="think-question">Where do you think this sentence should appear in a Task 1 report?</p>
+                <div class="think-quote">
+                    "The table shows the proportion of people from different household types living in poverty in Australia in 1999."
+                </div>
+                <p class="think-hint">Keep this question in mind. You will discover the answer in the next activity.</p>
+            </div>
+
             <!-- ===================== Exercise 1: Sample Report ===================== -->
             <h2 class="section-title" style="margin-top: var(--space-2xl);">Exercise 1 — Identify the Purpose of Each Paragraph</h2>
 
@@ -664,55 +681,61 @@
 
             <!-- Paragraph 1 -->
             <div class="sample-paragraph-wrap">
-                <div class="para-drop-zone">
+                <div class="para-text-col">
+                    <div class="sample-para-text">
+                        The table shows the proportion of people from different household types living in poverty in Australia in 1999.
+                    </div>
+                </div>
+                <div class="para-drop-col">
                     <span class="para-label">Paragraph 1</span>
                     <div class="drop-box" id="drop_p1" data-answer="C" ondragover="allowDrop(event)" ondrop="dropHere(event, 'drop_p1')" onclick="removeFromBox('drop_p1')">
                         Drop label here
                     </div>
                 </div>
-                <div class="sample-para-text">
-                    The table shows the proportion of people from different household types living in poverty in Australia in 1999.
-                </div>
             </div>
 
             <!-- Paragraph 2 -->
             <div class="sample-paragraph-wrap">
-                <div class="para-drop-zone">
+                <div class="para-text-col">
+                    <div class="sample-para-text">
+                        Overall, sole-parent families and single adults without children had the highest poverty rates, both well above the average for all households. By contrast, elderly households were the least likely to be poor. However, couples with children accounted for the largest number of people living in poverty.
+                    </div>
+                </div>
+                <div class="para-drop-col">
                     <span class="para-label">Paragraph 2</span>
                     <div class="drop-box" id="drop_p2" data-answer="A" ondragover="allowDrop(event)" ondrop="dropHere(event, 'drop_p2')" onclick="removeFromBox('drop_p2')">
                         Drop label here
                     </div>
                 </div>
-                <div class="sample-para-text">
-                    The table compares the proportions and numbers of people from different types of households living in poverty in Australia in 1999.
-                    <br><br>
-                    Overall, sole-parent families and single adults without children had the highest poverty rates, both well above the average for all households. By contrast, elderly households were the least likely to be poor. However, couples with children accounted for the largest number of people living in poverty.
-                </div>
             </div>
 
             <!-- Paragraph 3 -->
             <div class="sample-paragraph-wrap">
-                <div class="para-drop-zone">
+                <div class="para-text-col">
+                    <div class="sample-para-text">
+                        Among the household types with above-average poverty rates, sole parents had the highest figure, with 21% living in poverty, equivalent to 232,000 people. Single adults without children also had a high poverty rate, at 19%, and this group included 359,000 poor people. Although the proportion for couples with children was lower, at 12%, it was still slightly above the overall average of 11%. This group represented the largest number of people in poverty, at 933,000.
+                    </div>
+                </div>
+                <div class="para-drop-col">
                     <span class="para-label">Paragraph 3</span>
                     <div class="drop-box" id="drop_p3" data-answer="D" ondragover="allowDrop(event)" ondrop="dropHere(event, 'drop_p3')" onclick="removeFromBox('drop_p3')">
                         Drop label here
                     </div>
                 </div>
-                <div class="sample-para-text">
-                    Among the household types with above-average poverty rates, sole parents had the highest figure, with 21% living in poverty, equivalent to 232,000 people. Single adults without children also had a high poverty rate, at 19%, and this group included 359,000 poor people. Although the proportion for couples with children was lower, at 12%, it was still slightly above the overall average of 11%. This group represented the largest number of people in poverty, at 933,000.
-                </div>
             </div>
 
             <!-- Paragraph 4 -->
             <div class="sample-paragraph-wrap">
-                <div class="para-drop-zone">
+                <div class="para-text-col">
+                    <div class="sample-para-text">
+                        The remaining household types had poverty rates below the national average. Couples without children recorded a figure of 7%, or 211,000 people. The two elderly groups had the lowest levels of poverty: 6% of single aged people and only 4% of aged couples were poor, representing 54,000 and 48,000 people respectively.
+                    </div>
+                </div>
+                <div class="para-drop-col">
                     <span class="para-label">Paragraph 4</span>
                     <div class="drop-box" id="drop_p4" data-answer="B" ondragover="allowDrop(event)" ondrop="dropHere(event, 'drop_p4')" onclick="removeFromBox('drop_p4')">
                         Drop label here
                     </div>
-                </div>
-                <div class="sample-para-text">
-                    The remaining household types had poverty rates below the national average. Couples without children recorded a figure of 7%, or 211,000 people. The two elderly groups had the lowest levels of poverty: 6% of single aged people and only 4% of aged couples were poor, representing 54,000 and 48,000 people respectively.
                 </div>
             </div>
 
@@ -803,16 +826,6 @@
                     <strong style="display:block; margin-bottom:var(--space-sm); color:var(--primary-dark);">Answer Key:</strong>
                     <div id="ex2FeedbackContent" style="line-height:2; font-size:0.9rem;"></div>
                 </div>
-            </div>
-
-            <!-- Have a Think -->
-            <div class="think-card">
-                <div class="think-label">Have a Think</div>
-                <p class="think-question">Where do you think this sentence should appear in a Task 1 report?</p>
-                <div class="think-quote">
-                    "The table shows the proportion of people from different household types living in poverty in Australia in 1999."
-                </div>
-                <p class="think-hint">Keep this question in mind. You will discover the answer in the next activity.</p>
             </div>
 
             <!-- 底部导航 -->
